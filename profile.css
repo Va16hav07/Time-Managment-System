@@ -80,18 +80,6 @@ body {
     background-color: #5a6268; 
 }
 
-.profile-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #6c757d; 
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.2rem;
-}
-
 #signOutButton {
     background-color: transparent;
     color: #6c757d; 
