@@ -3,6 +3,10 @@ if (!localStorage.getItem("users")) {
     localStorage.setItem("users", JSON.stringify([]));
 }
 
+if (!localStorage.getItem("loggedinUser")) {
+    localStorage.setItem("loggedinUser", JSON.stringify([]));
+}
+
 // DOM elements
 const message = document.getElementById("message");
 const usernameInput = document.getElementById("username");
@@ -70,8 +74,13 @@ loginButton.addEventListener("click", () => {
     );
 
     if (user) {
+        // Store the logged-in user details
+        const loggedinUser = [{ username: user.username, email: user.email }];
+        localStorage.setItem("loggedinUser", JSON.stringify(loggedinUser));
+
         loginMessage.textContent = "Login successful! Redirecting...";
         loginMessage.style.color = "green";
+
         setTimeout(() => {
             window.location.href = "landing.html"; // Replace with your landing page
         }, 1000);
@@ -82,4 +91,7 @@ loginButton.addEventListener("click", () => {
 });
 
 // Switch to Register Page
-redirectToRegisterButton.add
+redirectToRegisterButton.addEventListener("click", () => {
+    loginPage.classList.remove("active");
+    registerPage.classList.add("active");
+});
