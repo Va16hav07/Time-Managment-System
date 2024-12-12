@@ -1,24 +1,15 @@
-// Fetch elements
 const welcomeMessage = document.getElementById("welcomeMessage");
 const signOutButton = document.getElementById("signOutButton");
 const taskInput = document.getElementById("taskInput");
 const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
-const startTaskButton = document.getElementById("startTaskButton");
-const endTaskButton = document.getElementById("endTaskButton");
-const currentTask = document.getElementById("currentTask");
-const timeSpent = document.getElementById("timeSpent");
-
-// Load logged-in user
 const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"))[0];
 
-if (!loggedinUser) {
-    window.location.href = "index.html"; // Redirect to login if no user is logged in
-} else {
+if (loggedinUser) {
     welcomeMessage.textContent = `Welcome, ${loggedinUser.username}!`;
+} else {
+    window.location.href = "index.html"; 
 }
-
-// Add task to the list
 addTaskButton.addEventListener("click", () => {
     const taskText = taskInput.value.trim();
 
@@ -55,56 +46,19 @@ addTaskButton.addEventListener("click", () => {
     deleteButton.textContent = "Delete";
     deleteButton.className = "delete-button";
     deleteButton.addEventListener("click", () => {
-        taskItem.remove();  // Remove from UI
-        saveTasksToLocalStorage();  // Update localStorage
+        taskItem.remove();  
+        saveTasksToLocalStorage();  
     });
 
     taskItem.appendChild(taskLabel);
     taskItem.appendChild(editButton);
     taskItem.appendChild(doneButton);
-    taskItem.appendChild(deleteButton);  // Add delete button
+    taskItem.appendChild(deleteButton);  
     taskList.appendChild(taskItem);
 
     taskInput.value = "";
     saveTasksToLocalStorage();
 });
-
-// Time tracking variables
-let currentTaskTimer = null;
-let timeInSeconds = 0;
-let taskInterval;
-
-// Start tracking time for a task
-startTaskButton.addEventListener("click", () => {
-    if (!taskInput.value.trim()) {
-        alert("Please enter a task before starting time tracking.");
-        return;
-    }
-    currentTask.textContent = `Current Task: ${taskInput.value}`;
-    taskInput.disabled = true;
-    startTaskButton.disabled = true;
-    endTaskButton.disabled = false;
-
-    taskInterval = setInterval(() => {
-        timeInSeconds++;
-        const minutes = Math.floor(timeInSeconds / 60);
-        const seconds = timeInSeconds % 60;
-        timeSpent.textContent = `Time Spent: ${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
-    }, 1000);
-});
-
-// Stop tracking time for the current task
-endTaskButton.addEventListener("click", () => {
-    clearInterval(taskInterval);
-    taskInput.disabled = false;
-    startTaskButton.disabled = false;
-    endTaskButton.disabled = true;
-    currentTask.textContent = "Current Task: None";
-    timeSpent.textContent = "Time Spent: 0:00";
-    timeInSeconds = 0;
-});
-
-// Save tasks to localStorage
 function saveTasksToLocalStorage() {
     const tasks = [];
     taskList.querySelectorAll("li").forEach((taskItem) => {
@@ -112,8 +66,6 @@ function saveTasksToLocalStorage() {
     });
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
-
-// Load tasks from localStorage on page load
 document.addEventListener("DOMContentLoaded", () => {
     const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     tasks.forEach((taskText) => {
@@ -147,19 +99,17 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteButton.textContent = "Delete";
         deleteButton.className = "delete-button";
         deleteButton.addEventListener("click", () => {
-            taskItem.remove();  // Remove from UI
-            saveTasksToLocalStorage();  // Update localStorage
+            taskItem.remove();  
+            saveTasksToLocalStorage();  
         });
 
         taskItem.appendChild(taskLabel);
         taskItem.appendChild(editButton);
         taskItem.appendChild(doneButton);
-        taskItem.appendChild(deleteButton);  // Add delete button
+        taskItem.appendChild(deleteButton);  
         taskList.appendChild(taskItem);
     });
 });
-
-// Sign Out
 signOutButton.addEventListener("click", () => {
     localStorage.removeItem("loggedinUser");
     window.location.href = "index.html";
