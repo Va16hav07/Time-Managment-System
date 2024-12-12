@@ -1,7 +1,7 @@
 body {
     font-family: 'Arial', sans-serif;
     display: flex;
-    justify-content: flex-end; /* Aligns the container to the right */
+    justify-content: flex-end; 
     align-items: center;
     min-height: 100vh;
     margin: 0;
@@ -43,7 +43,7 @@ body {
 .container button {
     width: 100%;
     padding: 12px;
-    background-color: #6c757d; /* Grey color for button */
+    background-color: #6c757d; 
     color: #ffffff;
     border: none;
     border-radius: 6px;
@@ -53,7 +53,7 @@ body {
 }
 
 .container button:hover {
-    background-color: #5a6268; /* Darker grey on hover */
+    background-color: #5a6268; 
 }
 
 .message {
@@ -71,7 +71,7 @@ body {
 .redirect button {
     width: auto;
     padding: 10px 20px;
-    background-color: #6c757d; /* Grey color for button */
+    background-color: #6c757d;
     color: #ffffff;
     border: none;
     border-radius: 6px;
@@ -81,5 +81,5 @@ body {
 }
 
 .redirect button:hover {
-    background-color: #5a6268; /* Darker grey on hover */
+    background-color: #5a6268; 
 }

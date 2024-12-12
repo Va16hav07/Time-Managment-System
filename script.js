@@ -48,21 +48,15 @@ registerButton.addEventListener("click", () => {
         localStorage.setItem("users", JSON.stringify(users));
         message.textContent = "Account created successfully! You can now log in.";
         message.style.color = "green";
-
-        // Clear fields
         usernameInput.value = "";
         emailInput.value = "";
         passwordInput.value = "";
     }
 });
-
-// Switch to Login Page
 redirectToLoginButton.addEventListener("click", () => {
     registerPage.classList.remove("active");
     loginPage.classList.add("active");
 });
-
-// Handle login
 loginButton.addEventListener("click", () => {
     const username = loginUsernameInput.value.trim();
     const email = loginEmailInput.value.trim();
@@ -74,7 +68,7 @@ loginButton.addEventListener("click", () => {
     );
 
     if (user) {
-        // Store the logged-in user details
+        
         const loggedinUser = [{ username: user.username, email: user.email }];
         localStorage.setItem("loggedinUser", JSON.stringify(loggedinUser));
 
@@ -82,7 +76,7 @@ loginButton.addEventListener("click", () => {
         loginMessage.style.color = "green";
 
         setTimeout(() => {
-            window.location.href = "landing.html"; // Replace with your landing page
+            window.location.href = "landing.html"; 
         }, 1000);
     } else {
         loginMessage.textContent = "Invalid credentials. Please try again.";
@@ -90,7 +84,7 @@ loginButton.addEventListener("click", () => {
     }
 });
 
-// Switch to Register Page
+
 redirectToRegisterButton.addEventListener("click", () => {
     loginPage.classList.remove("active");
     registerPage.classList.add("active");
