@@ -12,12 +12,6 @@ if (loggedinUser) {
 }
 addTaskButton.addEventListener("click", () => {
     const taskText = taskInput.value.trim();
-
-    if (!taskText) {
-        alert("Task cannot be empty!");
-        return;
-    }
-
     const taskItem = document.createElement("li");
     taskItem.className = "task-item";
 
