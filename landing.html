@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Management System</title>
+    <link rel="stylesheet" href="landing.css">
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <h1 id="welcomeMessage">Welcome to Your Time Management System</h1>
+        <div class="top-bar-right">
+            <!-- Profile Button -->
+            <a href="profile.html">
+                <button class="profile-button">Profile</button>
+            </a>
+            <!-- Sign Out Button -->
+            <button id="signOutButton" class="sign-out-button">Sign Out</button>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="layout">
+        <!-- Sidebar with Time Tracking and Options -->
+        <aside class="sidebar">
+            <h2>Time Tracker</h2>
+            <p id="currentTask">Current Task: None</p>
+            <p id="timeSpent">Time Spent: 0:00</p>
+            <button id="startTaskButton">Start New Task</button>
+            <button id="endTaskButton">End Current Task</button>
+        </aside>
+
+        <!-- Main Content Area for Task Manager -->
+        <main class="content">
+            <h2>Your Tasks</h2>
+            <div class="task-input">
+                <input type="text" id="taskInput" placeholder="Add a new task">
+                <button id="addTaskButton">Add Task</button>
+            </div>
+            <ul id="taskList" class="task-list">
+            </ul>
+        </main>
+    </div>
+
+    <script src="landing.js"></script>
+</body>
+</html>
