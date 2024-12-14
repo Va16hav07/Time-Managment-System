@@ -3,6 +3,8 @@ const signOutButton = document.getElementById("signOutButton");
 const taskInput = document.getElementById("taskInput");
 const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
+const searchBar = document.getElementById("searchBar");
+
 const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"))[0];
 
 if (loggedinUser) {
@@ -20,9 +22,9 @@ const saveTasks = () => {
 };
 
 // Function to render tasks
-const renderTasks = () => {
+const renderTasks = (filteredTasks = tasks) => {
     taskList.innerHTML = ""; // Clear the list
-    tasks.forEach((task, index) => {
+    filteredTasks.forEach((task, index) => {
         const taskItem = document.createElement("li");
         taskItem.className = "task-item";
 
@@ -88,3 +90,12 @@ signOutButton.addEventListener("click", () => {
     localStorage.removeItem("loggedinUser");
     window.location.href = "index.html";
 });
+
+// Function to filter tasks based on search input
+const filterTasks = () => {
+    const searchText = searchBar.value.toLowerCase().trim();
+    const filteredTasks = tasks.filter(task => task.text.toLowerCase().includes(searchText));
+    renderTasks(filteredTasks);
+};
+
+searchBar.addEventListener("input", filterTasks);
