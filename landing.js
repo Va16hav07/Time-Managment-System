@@ -2,6 +2,8 @@ const welcomeMessage = document.getElementById("welcomeMessage");
 const signOutButton = document.getElementById("signOutButton");
 const taskInput = document.getElementById("taskInput");
 const taskDescriptionInput = document.getElementById("taskDescriptionInput");
+const taskDueDate = document.getElementById("taskDueDate");
+const taskPriority = document.getElementById("taskPriority");
 const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
 const searchBar = document.getElementById("searchBar");
@@ -45,6 +47,18 @@ const renderTasks = (filteredTasks = tasks) => {
             descriptionDropdown.style.display = descriptionDropdown.style.display === "none" ? "block" : "none";
         });
 
+        // Show priority and due date
+        const taskDetails = document.createElement("div");
+        taskDetails.classList.add("task-details");
+
+        const taskDueDate = document.createElement("span");
+        taskDueDate.textContent = task.dueDate ? `Due: ${task.dueDate}` : "No due date";
+        taskDetails.appendChild(taskDueDate);
+
+        const taskPriority = document.createElement("span");
+        taskPriority.textContent = `Priority: ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}`;
+        taskDetails.appendChild(taskPriority);
+
         const editButton = document.createElement("button");
         editButton.textContent = "Edit";
         editButton.className = "edit-button";
@@ -77,6 +91,7 @@ const renderTasks = (filteredTasks = tasks) => {
 
         taskItem.appendChild(taskLabel);
         taskItem.appendChild(descriptionDropdown);
+        taskItem.appendChild(taskDetails);
         taskItem.appendChild(editButton);
         taskItem.appendChild(doneButton);
         taskItem.appendChild(deleteButton);
@@ -90,15 +105,28 @@ renderTasks();
 addTaskButton.addEventListener("click", () => {
     const taskText = taskInput.value.trim();
     const taskDescription = taskDescriptionInput.value.trim();
+    const taskDueDateValue = taskDueDate.value.trim();
+    const taskPriorityValue = taskPriority.value.trim();
+
     if (!taskText) return;
 
-    const newTask = { text: taskText, description: taskDescription || "", done: false };
+    // Create a new task with priority and due date
+    const newTask = {
+        text: taskText,
+        description: taskDescription || "",
+        done: false,
+        dueDate: taskDueDateValue || "",
+        priority: taskPriorityValue || "low"
+    };
+
     tasks.push(newTask);
     saveTasks();
     renderTasks();
 
     taskInput.value = "";
     taskDescriptionInput.value = "";
+    taskDueDate.value = "";
+    taskPriority.value = "low";
 });
 
 signOutButton.addEventListener("click", () => {
