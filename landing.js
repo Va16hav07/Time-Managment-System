@@ -51,13 +51,13 @@ const renderTasks = (filteredTasks = tasks) => {
         const taskDetails = document.createElement("div");
         taskDetails.classList.add("task-details");
 
-        const taskDueDate = document.createElement("span");
-        taskDueDate.textContent = task.dueDate ? `Due: ${task.dueDate}` : "No due date";
-        taskDetails.appendChild(taskDueDate);
+        const taskDueDateSpan = document.createElement("span"); // Avoid variable name conflict
+        taskDueDateSpan.textContent = task.dueDate ? `Due: ${task.dueDate}` : "No due date";
+        taskDetails.appendChild(taskDueDateSpan);
 
-        const taskPriority = document.createElement("span");
-        taskPriority.textContent = `Priority: ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}`;
-        taskDetails.appendChild(taskPriority);
+        const taskPrioritySpan = document.createElement("span"); // Avoid variable name conflict
+        taskPrioritySpan.textContent = `Priority: ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}`;
+        taskDetails.appendChild(taskPrioritySpan);
 
         const editButton = document.createElement("button");
         editButton.textContent = "Edit";
