@@ -26,6 +26,23 @@ const saveTasks = () => {
 
 // Function to render tasks
 const renderTasks = (filteredTasks = tasks) => {
+    // Sort tasks by priority (high > medium > low) and due date (closest first)
+    filteredTasks.sort((a, b) => {
+        // Priority sorting
+        const priorityOrder = { high: 1, medium: 2, low: 3 };
+        const priorityComparison = priorityOrder[a.priority] - priorityOrder[b.priority];
+        
+        if (priorityComparison !== 0) return priorityComparison;
+
+        // If priorities are the same, sort by due date (earliest first)
+        if (a.dueDate && b.dueDate) {
+            return new Date(a.dueDate) - new Date(b.dueDate);
+        }
+
+        // If only one task has a due date, the one without it comes last
+        return a.dueDate ? -1 : 1;
+    });
+
     taskList.innerHTML = ""; // Clear the list
     filteredTasks.forEach((task, index) => {
         const taskItem = document.createElement("li");
@@ -51,11 +68,11 @@ const renderTasks = (filteredTasks = tasks) => {
         const taskDetails = document.createElement("div");
         taskDetails.classList.add("task-details");
 
-        const taskDueDateSpan = document.createElement("span"); // Avoid variable name conflict
+        const taskDueDateSpan = document.createElement("span");
         taskDueDateSpan.textContent = task.dueDate ? `Due: ${task.dueDate}` : "No due date";
         taskDetails.appendChild(taskDueDateSpan);
 
-        const taskPrioritySpan = document.createElement("span"); // Avoid variable name conflict
+        const taskPrioritySpan = document.createElement("span");
         taskPrioritySpan.textContent = `Priority: ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}`;
         taskDetails.appendChild(taskPrioritySpan);
 
@@ -98,6 +115,7 @@ const renderTasks = (filteredTasks = tasks) => {
         taskList.appendChild(taskItem);
     });
 };
+
 
 // Initial rendering of tasks
 renderTasks();
