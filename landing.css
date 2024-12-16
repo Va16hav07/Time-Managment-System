@@ -51,6 +51,7 @@ body {
     flex: 1;
     overflow: hidden;
 }
+
 .content {
     flex: 1;
     padding: 20px;
@@ -148,6 +149,25 @@ body {
     background-color: #c82333;
 }
 
+/* Task Details Styles */
+.task-details {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.task-details span {
+    display: block;
+    margin-top: 5px;
+}
+
+.task-priority {
+    color: #ff9900; /* Example color for priority */
+}
+
+.task-due-date {
+    color: red; /* Example color for due date */
+}
+
 @media (max-width: 768px) {
     .layout {
         flex-direction: column;
@@ -163,6 +183,7 @@ body {
         padding: 10px;
     }
 }
+
 .profile-button {
     background-color: #28a745; 
     color: white;
@@ -175,6 +196,7 @@ body {
 
 .profile-button:hover {
     background-color: #218838;
+
 }
 
 
@@ -193,3 +215,4 @@ body {
 .dropdown-content.show {
     display: block;
 }
+

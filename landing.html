@@ -17,6 +17,7 @@
             </a>
             <button id="signOutButton" class="sign-out-button">Sign Out</button>
             </div>
+            <!-- Dropdown menu  for additional options-->
             <div class="dropdown-container">
                 <button class="dropdown-btn" id="dropdownBtn">...</button>
                 <div class="dropdown-content" id="dropdownMenu">
@@ -36,11 +37,35 @@
     <div class="main">
         <main class="content">
             <h2>Your Tasks</h2>
+            <div class="Search">
+                <h2>Search Tasks</h2>
+                <input 
+                  type="text" 
+                  id="searchBar" 
+                  class="search-bar" 
+                  placeholder="Search for a task..." 
+                  oninput="filterTasks()">
+            </div><br>
+            
+            <!-- Updated task input form -->
             <div class="task-input">
                 <input type="text" id="taskInput" placeholder="Add a new task">
+                <input type="text" id="taskDescriptionInput" placeholder="Task Description">
+                
+                <!-- Add Due Date Input -->
+                <input type="date" id="taskDueDate" placeholder="Due Date">
+                
+                <!-- Add Priority Dropdown -->
+                <select id="taskPriority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                
                 <button id="addTaskButton">Add Task</button>
                 
             </div>
+            
             <ul id="taskList" class="task-list">
             </ul>
         </main>
