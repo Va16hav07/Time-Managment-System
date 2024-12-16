@@ -27,6 +27,7 @@ body {
 .top-bar .top-bar-right {
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .top-bar button {
@@ -195,4 +196,23 @@ body {
 
 .profile-button:hover {
     background-color: #218838;
+
 }
+
+
+/* Dropdown Content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 150px;
+    border-radius: 5px;
+}
+
+.dropdown-content.show {
+    display: block;
+}
+

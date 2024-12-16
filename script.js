@@ -88,4 +88,6 @@ loginButton.addEventListener("click", () => {
 redirectToRegisterButton.addEventListener("click", () => {
     loginPage.classList.remove("active");
     registerPage.classList.add("active");
+
 });
+

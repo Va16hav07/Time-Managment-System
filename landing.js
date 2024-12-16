@@ -1,3 +1,6 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+    
 const welcomeMessage = document.getElementById("welcomeMessage");
 const signOutButton = document.getElementById("signOutButton");
 const taskInput = document.getElementById("taskInput");
@@ -8,13 +11,21 @@ const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
 const searchBar = document.getElementById("searchBar");
 
-const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"))[0];
+const dropdownBtn = document.getElementById("dropdownBtn");
+const dropdownMenu = document.getElementById("dropdownMenu");
+
+//check if user is logged in
+const storedUser =localStorage.getItem("loggedinUser");
+const loggedinUser =storedUser? JSON.parse(localStorage.getItem("loggedinUser"))[0]:null;
 
 if (loggedinUser) {
     welcomeMessage.textContent = `Welcome, ${loggedinUser.username}!`;
-} else {
-    window.location.href = "index.html";
+} 
+else {
+    window.location.href = "index.html"; 
 }
+
+
 
 // Retrieve tasks from localStorage or initialize an empty array
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -47,7 +58,7 @@ const renderTasks = (filteredTasks = tasks) => {
     filteredTasks.forEach((task, index) => {
         const taskItem = document.createElement("li");
         taskItem.className = "task-item";
-
+// create task label and apply styles based on task completion
         const taskLabel = document.createElement("span");
         taskLabel.textContent = task.text;
         taskLabel.style.textDecoration = task.done ? "line-through" : "none";
@@ -146,11 +157,40 @@ addTaskButton.addEventListener("click", () => {
     taskDueDate.value = "";
     taskPriority.value = "low";
 });
-
-signOutButton.addEventListener("click", () => {
-    localStorage.removeItem("loggedinUser");
-    window.location.href = "index.html";
+    // handles dropdown menu toggle
+    if(dropdownBtn && dropdownMenu){
+dropdownBtn.addEventListener("click", () => {
+    dropdownMenu.classList.toggle("show");
 });
+}
+
+
+// sign-out functionality
+if(signOutButton){
+signOutButton.addEventListener("click", () => {
+
+    const userConfirmed =confirm("Are you sure you want to sign out?");
+
+    if (userConfirmed) {
+        
+    localStorage.removeItem("loggedinUser");
+    alert("You have signed out successfully!");
+
+    window.location.href = "index.html";
+    }
+    else{
+
+        alert("sign out cancelled.");
+    
+    }
+    
+
+});
+
+}
+
+});
+
 
 // Function to filter tasks based on search input
 const filterTasks = () => {
@@ -163,3 +203,4 @@ const filterTasks = () => {
 };
 
 searchBar.addEventListener("input", filterTasks);
+
