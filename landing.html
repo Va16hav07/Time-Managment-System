@@ -9,19 +9,37 @@
 <body>
     <div class="top-bar">
         <h1 id="welcomeMessage">Welcome to Your Time Management System</h1>
+        <br />
+        <br />
         <div class="top-bar-right">
             <a href="profile.html">
-                <button class="profile-button">Profile</button>
+                <button class = "profile-button">Profile</button>
             </a>
             <button id="signOutButton" class="sign-out-button">Sign Out</button>
+            </div>
+            <div class="dropdown-container">
+                <button class="dropdown-btn" id="dropdownBtn">...</button>
+                <div class="dropdown-content" id="dropdownMenu">
+                    <ul class="disc">
+                    
+                    <li><a href="help.html">Help</a></li>
+                    
+                    <li><a href="abt.html">About Us</a></li>
+                    </ul>
+                    
+                    </div>
+
+            
         </div>
     </div>
+    
     <div class="main">
         <main class="content">
             <h2>Your Tasks</h2>
             <div class="task-input">
                 <input type="text" id="taskInput" placeholder="Add a new task">
                 <button id="addTaskButton">Add Task</button>
+                
             </div>
             <ul id="taskList" class="task-list">
             </ul>
@@ -29,5 +47,6 @@
     </div>
     
     <script src="landing.js"></script>
+    <script src="dropdown.js"></script>
 </body>
 </html>

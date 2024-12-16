@@ -1,15 +1,24 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+    
 const welcomeMessage = document.getElementById("welcomeMessage");
 const signOutButton = document.getElementById("signOutButton");
 const taskInput = document.getElementById("taskInput");
 const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
-const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"))[0];
+const dropdownBtn = document.getElementById("dropdownBtn");
+const dropdownMenu = document.getElementById("dropdownMenu");
+
+const storedUser =localStorage.getItem("loggedinUser");
+const loggedinUser =storedUser? JSON.parse(localStorage.getItem("loggedinUser"))[0]:null;
 
 if (loggedinUser) {
     welcomeMessage.textContent = `Welcome, ${loggedinUser.username}!`;
-} else {
+} 
+else {
     window.location.href = "index.html"; 
 }
+
 
 addTaskButton.addEventListener("click", () => {
     const taskText = taskInput.value.trim();
@@ -54,8 +63,37 @@ addTaskButton.addEventListener("click", () => {
 
     taskInput.value = "";
 });
-
-signOutButton.addEventListener("click", () => {
-    localStorage.removeItem("loggedinUser");
-    window.location.href = "index.html";
+    
+    if(dropdownBtn && dropdownMenu){
+dropdownBtn.addEventListener("click", () => {
+    dropdownMenu.classList.toggle("show");
 });
+    }
+
+
+
+if(signOutButton){
+signOutButton.addEventListener("click", () => {
+
+    const userConfirmed =confirm("Are you sure you want to sign out?");
+
+    if (userConfirmed) {
+        
+    localStorage.removeItem("loggedinUser");
+    alert("You have signed out successfully!");
+
+    window.location.href = "index.html";
+    }
+    else{
+
+        alert("sign out cancelled.");
+    
+    }
+    
+
+});
+
+}
+
+});
+
