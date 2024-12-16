@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"));
+
+    if (loggedinUser.length > 0) {
+        window.location.href = "landing.html";
+    }
+});
 // Initialize local storage if it doesn't exist
 if (!localStorage.getItem("users")) {
     localStorage.setItem("users", JSON.stringify([]));
