@@ -1,11 +1,10 @@
 const profileUsername = document.getElementById("profileUsername");
 const profileEmail = document.getElementById("profileEmail");
 const editProfileButton = document.getElementById("editProfileButton");
-
-const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"))[0];
+const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"));
 
 if (!loggedinUser) {
-    window.location.href = "index.html"; 
+    window.location.href = "index.html";
 } else {
     profileUsername.textContent = `Username: ${loggedinUser.username}`;
     profileEmail.textContent = `Email: ${loggedinUser.email}`;
@@ -19,10 +18,12 @@ editProfileButton.addEventListener("click", () => {
     if (newUsername && newEmail && newPassword) {
         loggedinUser.username = newUsername;
         loggedinUser.email = newEmail;
-        loggedinUser.password = newPassword; 
+        loggedinUser.password = newPassword;
+        localStorage.setItem("loggedinUser", JSON.stringify(loggedinUser));
 
-        localStorage.setItem("loggedinUser", JSON.stringify([loggedinUser]));
         alert("Profile updated successfully!");
         window.location.href = "landing.html"; 
+    } else {
+        alert("Please fill in all fields.");
     }
 });
