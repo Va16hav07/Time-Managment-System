@@ -17,34 +17,19 @@ if (loggedinUser) {
     window.location.href = "index.html";
 }
 
-profileIcon.addEventListener("click", (event) => {
-    event.stopPropagation(); 
-    dropdownMenu.classList.toggle("hidden");
-});
-
-document.addEventListener("click", (event) => {
-    if (!dropdownMenu.contains(event.target) && !profileIcon.contains(event.target)) {
-        dropdownMenu.classList.add("hidden");
-    }
-});
-function navigateTo(url) {
-    window.location.href = url;
-}
-
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+// Fetch tasks for the logged-in user
+let tasks = JSON.parse(localStorage.getItem(loggedinUser.username + "_tasks")) || [];
 
 // Function to save tasks to localStorage
 const saveTasks = () => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem(loggedinUser.username + "_tasks", JSON.stringify(tasks));
 };
 
+// Function to render tasks
 const renderTasks = (filteredTasks = tasks) => {
     taskList.innerHTML = "";
-    
-    // Filter tasks based on the logged-in user
-    const userTasks = filteredTasks.filter(task => task.username === loggedinUser.username);
-    
-    userTasks.sort((a, b) => {
+
+    filteredTasks.sort((a, b) => {
         const priorityOrder = { high: 1, medium: 2, low: 3 };
         const priorityComparison = priorityOrder[a.priority] - priorityOrder[b.priority];
         if (priorityComparison !== 0) return priorityComparison;
@@ -52,8 +37,7 @@ const renderTasks = (filteredTasks = tasks) => {
         return new Date(a.dueDate || "9999-12-31") - new Date(b.dueDate || "9999-12-31");
     });
 
-    // Generate task items
-    userTasks.forEach((task, index) => {
+    filteredTasks.forEach((task, index) => {
         const taskItem = document.createElement("li");
         taskItem.className = "task-item";
 
@@ -107,8 +91,7 @@ const renderTasks = (filteredTasks = tasks) => {
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         deleteButton.addEventListener("click", () => {
-            const taskIndex = tasks.indexOf(task);
-            tasks.splice(taskIndex, 1);
+            tasks.splice(index, 1);
             saveTasks();
             renderTasks();
         });
@@ -145,7 +128,7 @@ addTaskButton.addEventListener("click", () => {
         dueDate: taskDueDateValue,
         priority: taskPriorityValue,
         done: false,
-        username: loggedinUser.username 
+        username: loggedinUser.username
     };
 
     tasks.push(newTask);
@@ -174,3 +157,19 @@ searchBar.addEventListener("input", () => {
     );
     renderTasks(filteredTasks);
 });
+
+// Profile icon dropdown toggle
+profileIcon.addEventListener("click", (event) => {
+    event.stopPropagation();
+    dropdownMenu.classList.toggle("hidden");
+});
+
+document.addEventListener("click", (event) => {
+    if (!dropdownMenu.contains(event.target) && !profileIcon.contains(event.target)) {
+        dropdownMenu.classList.add("hidden");
+    }
+});
+
+function navigateTo(url) {
+    window.location.href = url;
+}
