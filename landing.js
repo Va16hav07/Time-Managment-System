@@ -59,6 +59,16 @@ const updateTaskStatus = () => {
 const renderTasks = (filteredTasks = tasks) => {
     taskList.innerHTML = "";
 
+    // Check if there are no tasks to display
+    if (filteredTasks.length === 0) {
+        const noTaskMessage = document.createElement("p");
+        noTaskMessage.textContent = "No Task Available";
+        noTaskMessage.style.textAlign = "center";
+        noTaskMessage.style.color = "#888";
+        taskList.appendChild(noTaskMessage);
+        return; // Exit the function early
+    }
+
     filteredTasks.sort((a, b) => {
         const priorityOrder = { high: 1, medium: 2, low: 3 };
         const priorityComparison = priorityOrder[a.priority] - priorityOrder[b.priority];
