@@ -59,7 +59,7 @@ const renderTasks = (filteredTasks = tasks) => {
 
         // Task label
         const taskLabel = document.createElement("span");
-        taskLabel.textContent = task.text;
+        taskLabel.textContent = task.TaskTitle;
         taskLabel.style.textDecoration = task.done ? "line-through" : "none";
         taskLabel.style.color = task.done ? "gray" : "black";
 
@@ -86,9 +86,9 @@ const renderTasks = (filteredTasks = tasks) => {
         const editButton = document.createElement("button");
         editButton.textContent = "Edit";
         editButton.addEventListener("click", () => {
-            const updatedText = prompt("Edit task name:", task.text);
+            const updatedText = prompt("Edit task name:", task.TaskTitle);
             const updatedDescription = prompt("Edit description:", task.description);
-            if (updatedText) task.text = updatedText;
+            if (updatedText) task.TaskTitle = updatedText;
             if (updatedDescription !== null) task.description = updatedDescription;
             saveTasks();
             renderTasks();
@@ -169,7 +169,7 @@ signOutButton.addEventListener("click", () => {
 searchBar.addEventListener("input", () => {
     const searchQuery = searchBar.value.toLowerCase();
     const filteredTasks = tasks.filter(task =>
-        task.text.toLowerCase().includes(searchQuery) ||
+        task.TaskTitle.toLowerCase().includes(searchQuery) ||
         (task.description && task.description.toLowerCase().includes(searchQuery))
     );
     renderTasks(filteredTasks);
