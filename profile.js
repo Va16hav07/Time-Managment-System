@@ -1,4 +1,4 @@
-const profileUsername = document.getElementById("profileUsername");
+const profileUsername = document.getElementById("profilename");
 const profileEmail = document.getElementById("profileEmail");
 const editProfileButton = document.getElementById("editProfileButton");
 const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"));
