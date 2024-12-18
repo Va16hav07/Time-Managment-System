@@ -12,7 +12,7 @@ const searchBar = document.getElementById("searchBar");
 const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"));
 
 if (loggedinUser) {
-    welcomeMessage.textContent = `Welcome, ${loggedinUser.username}!`;
+    welcomeMessage.textContent = `Welcome, ${loggedinUser.name}!`;
 } else {
     window.location.href = "index.html";
 }
