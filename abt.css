@@ -32,7 +32,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(86, 85, 85);
+    background-color: var(--primary-color);
+    /* background-color: rgb(90, 87, 87); */
     color: #fff;
     padding: 20px;
     position: sticky;
@@ -70,7 +71,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-    background: #007bff;  /* Blue gradient */
+    background: linear-gradient(45deg, #2196f3, #03a9f4); /* Blue gradient */
     padding: 100px 0;
     color: #fff;
     text-align: center;
@@ -226,3 +227,5 @@ footer .footer-link:hover {
         font-size: 2rem;
     }
 }
+
+

@@ -35,7 +35,7 @@ body {
 .container input {
     width: 92%;
     padding: 12px;
-    margin: 8px 0;
+    margin: 8px 0; 
     border: 1px solid #ddd;
     border-radius: 6px;
     font-size: 14px;
@@ -43,6 +43,7 @@ body {
 
 .container button {
     width: 100%;
+
     padding: 12px;
     background-color: #575e65; 
     color: #ffffff;
@@ -53,8 +54,9 @@ body {
     transition: background-color 0.3s ease;
 }
 
+
 .container button:hover {
-    background-color: #007bff; 
+    background-color: #1b1b1b; 
 }
 
 .message {

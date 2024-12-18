@@ -13,7 +13,7 @@ const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"));
 
 
 if (loggedinUser) {
-    welcomeMessage.textContent = `Welcome, ${loggedinUser.username}!`;
+    welcomeMessage.textContent = `Welcome, ${loggedinUser.name}!`;
 } else {
     window.location.href = "index.html";
 }
@@ -89,9 +89,9 @@ const renderTasks = (filteredTasks = tasks) => {
 
         // Task label
         const taskLabel = document.createElement("span");
-        taskLabel.textContent = task.TaskTitle;
+        taskLabel.textContent = task.text;
         taskLabel.style.textDecoration = task.done ? "line-through" : "none";
-        taskLabel.style.color = task.done ? "gray" : "black";
+        taskLabel.style.color = task.done ? "gray" : "red";
 
         // Toggle description display
         const description = document.createElement("div");
@@ -117,9 +117,9 @@ const renderTasks = (filteredTasks = tasks) => {
         editButton.classList.add("edit");
         editButton.textContent = "Edit";
         editButton.addEventListener("click", () => {
-            const updatedText = prompt("Edit task name:", task.TaskTitle);
+            const updatedText = prompt("Edit task name:", task.text);
             const updatedDescription = prompt("Edit description:", task.description);
-            if (updatedText) task.TaskTitle = updatedText;
+            if (updatedText) task.text = updatedText;
             if (updatedDescription !== null) task.description = updatedDescription;
             saveTasks();
             renderTasks();
@@ -173,7 +173,7 @@ addTaskButton.addEventListener("click", () => {
     }
 
     const newTask = {
-        TaskTitle: taskText,
+        text: taskText, // Changed TaskTitle to text
         description: taskDescription,
         dueDate: taskDueDateValue,
         priority: taskPriorityValue,
@@ -202,7 +202,7 @@ signOutButton.addEventListener("click", () => {
 searchBar.addEventListener("input", () => {
     const searchQuery = searchBar.value.toLowerCase();
     const filteredTasks = tasks.filter(task =>
-        task.TaskTitle.toLowerCase().includes(searchQuery) ||
+        task.text.toLowerCase().includes(searchQuery) ||
         (task.description && task.description.toLowerCase().includes(searchQuery))
     );
     renderTasks(filteredTasks);

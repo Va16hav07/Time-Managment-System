@@ -1,3 +1,4 @@
+
 // Timer functionality for Task Timer section
 
 let timer;
