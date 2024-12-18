@@ -1,4 +1,6 @@
 const welcomeMessage = document.getElementById("welcomeMessage");
+const profileIcon = document.getElementById("profileIcon");
+const dropdownMenu = document.getElementById("dropdownMenu");
 const signOutButton = document.getElementById("signOutButton");
 const taskInput = document.getElementById("taskInput");
 const taskDescriptionInput = document.getElementById("taskDescriptionInput");
@@ -7,8 +9,6 @@ const taskPriority = document.getElementById("taskPriority");
 const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
 const searchBar = document.getElementById("searchBar");
-
-// Retrieve the logged-in user safely
 const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"));
 
 if (loggedinUser) {
@@ -17,16 +17,20 @@ if (loggedinUser) {
     window.location.href = "index.html";
 }
 
-// Profile button logic (ensures only one listener)
-const profileButton = document.querySelector('.profile-button');
-if (profileButton) {
-    profileButton.addEventListener('click', () => {
-        console.log("Navigating to profile.html...");
-        window.location.href = "profile.html";
-    });
+profileIcon.addEventListener("click", (event) => {
+    event.stopPropagation(); 
+    dropdownMenu.classList.toggle("hidden");
+});
+
+document.addEventListener("click", (event) => {
+    if (!dropdownMenu.contains(event.target) && !profileIcon.contains(event.target)) {
+        dropdownMenu.classList.add("hidden");
+    }
+});
+function navigateTo(url) {
+    window.location.href = url;
 }
 
-// Retrieve tasks from localStorage or initialize an empty array
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 // Function to save tasks to localStorage
@@ -141,7 +145,7 @@ addTaskButton.addEventListener("click", () => {
         dueDate: taskDueDateValue,
         priority: taskPriorityValue,
         done: false,
-        username: loggedinUser.username // Associate task with the logged-in user
+        username: loggedinUser.username /\
     };
 
     tasks.push(newTask);

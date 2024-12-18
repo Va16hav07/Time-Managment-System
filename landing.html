@@ -9,19 +9,21 @@
 <body>
     <div class="top-bar">
         <h1 id="welcomeMessage">Welcome to Your Time Management System</h1>
-        <br />
-        <br />
         <div class="top-bar-right">
-            <a href="profile.html">
-                <button class = "profile-button">Profile</button>
-            </a>
-            <button id="signOutButton" class="sign-out-button">Sign Out</button>
-            </div>    
+            <div class="profile-icon-container">
+                <img src="image.png" alt="Profile Icon" id="profileIcon" class="profile-icon">
+                <div id="dropdownMenu" class="dropdown-menu hidden">
+                    <button class="dropdown-item" onclick="navigateTo('profile.html')">Profile</button>
+                    <button class="dropdown-item" onclick="navigateTo('help.html')">Help</button>
+                    <button class="dropdown-item" onclick="navigateTo('abt.html')">About Us</button>
+                    <button class="dropdown-item" id="signOutButton">Sign Out</button>
+                </div>
+            </div>            
+        </div>
     </div>
     
     <div class="main">
         <main class="content">
-            <h2>Your Tasks</h2>
             <div class="Search">
                 <h2>Search Tasks</h2>
                 <input 
@@ -31,42 +33,21 @@
                   placeholder="Search for a task..." 
                   oninput="filterTasks()">
             </div><br>
-            
-            <!-- Updated task input form -->
+            <h2>Your Tasks</h2>
             <div class="task-input">
-                <input type="text" id="taskInput" placeholder="Add a new task">
+                <input type="text" id="taskInput" placeholder="Add Task title">
                 <input type="text" id="taskDescriptionInput" placeholder="Task Description">
-                
-                <!-- Add Due Date Input -->
                 <input type="date" id="taskDueDate" placeholder="Due Date">
-                
-                <!-- Add Priority Dropdown -->
                 <select id="taskPriority">
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
                 </select>
-                
                 <button id="addTaskButton">Add Task</button>
-                
             </div>
-            
-            <ul id="taskList" class="task-list">
-            </ul>
+            <ul id="taskList" class="task-list"></ul>
         </main>
-    </div>
-    <footer>
-        <div class="top-bar">
-            <div class="top-bar-left">
-                <h1>Time Management System</h1>
-            </div>
-            <div class="top-bar-right">
-                <a href="help.html"><button class="help-button">Help</button></a>
-                <a href="abt.html"><button class="about-us-button">About Us</button></a>
-            </div>
-        </div>
-    </footer>
-    
+    </div>    
     <script src="landing.js"></script>
 </body>
 </html>

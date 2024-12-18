@@ -112,3 +112,15 @@ if (redirectToRegisterButton) {
         registerPage.classList.add("active");
     });
 }
+
+document.getElementById('redirectToLogin').addEventListener('click', function(e) {
+    e.preventDefault();  
+    document.getElementById('registerPage').classList.remove('active');
+    document.getElementById('loginPage').classList.add('active');
+});
+
+document.getElementById('redirectToRegister').addEventListener('click', function(e) {
+    e.preventDefault();  
+    document.getElementById('loginPage').classList.remove('active');
+    document.getElementById('registerPage').classList.add('active');
+});

@@ -13,12 +13,13 @@ body {
 
 .container {
     width: 330px;
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.2); 
     padding: 24px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
     display: none; 
-    margin-right: 85px; 
+    margin-right: 85px;
+    backdrop-filter: blur(2000px);
 }
 
 .container.active {
@@ -53,7 +54,7 @@ body {
 }
 
 .container button:hover {
-    background-color: #5a6268; 
+    background-color: #007bff; 
 }
 
 .message {
