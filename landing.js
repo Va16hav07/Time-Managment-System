@@ -11,6 +11,7 @@ const taskList = document.getElementById("taskList");
 const searchBar = document.getElementById("searchBar");
 const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"));
 
+
 if (loggedinUser) {
     welcomeMessage.textContent = `Welcome, ${loggedinUser.username}!`;
 } else {
@@ -37,6 +38,35 @@ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 const saveTasks = () => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 };
+//
+
+const updateTaskStatus = () => {
+    const currentDate = new Date(); // Get today's date
+
+    // Filter tasks for the logged-in user
+    const userTasks = tasks.filter(task => task.username === loggedinUser.username);
+
+    userTasks.forEach(task => {
+        const taskDueDate = task.dueDate ? new Date(task.dueDate) : null;
+
+        if (taskDueDate && taskDueDate < currentDate) {
+            task.done = false; // Mark the task as incomplete if it's past due
+        }
+    });
+
+    // Update the main tasks array with the modified userTasks
+    tasks = tasks.map(task => {
+        if (task.username === loggedinUser.username) {
+            const updatedTask = userTasks.find(userTask => userTask.TaskTitle === task.TaskTitle);
+            return updatedTask ? updatedTask : task;
+        }
+        return task;
+    });
+
+    saveTasks(); // Save updated tasks to localStorage
+    renderTasks(); // Re-render the task list with updated statuses
+};
+
 
 const renderTasks = (filteredTasks = tasks) => {
     taskList.innerHTML = "";
@@ -84,6 +114,7 @@ const renderTasks = (filteredTasks = tasks) => {
 
         // Edit button
         const editButton = document.createElement("button");
+        editButton.classList.add("edit");
         editButton.textContent = "Edit";
         editButton.addEventListener("click", () => {
             const updatedText = prompt("Edit task name:", task.TaskTitle);
@@ -96,6 +127,7 @@ const renderTasks = (filteredTasks = tasks) => {
 
         // Done button
         const doneButton = document.createElement("button");
+        doneButton.classList.add("done");
         doneButton.textContent = task.done ? "Undo" : "Done";
         doneButton.addEventListener("click", () => {
             task.done = !task.done;
@@ -105,6 +137,7 @@ const renderTasks = (filteredTasks = tasks) => {
 
         // Delete button
         const deleteButton = document.createElement("button");
+        deleteButton.classList.add("delete");
         deleteButton.textContent = "Delete";
         deleteButton.addEventListener("click", () => {
             const taskIndex = tasks.indexOf(task);
