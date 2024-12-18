@@ -124,9 +124,12 @@ const renderTasks = (filteredTasks = tasks) => {
         deleteButton.classList.add("delete");
         deleteButton.textContent = "Delete";
         deleteButton.addEventListener("click", () => {
-            tasks.splice(index, 1);
-            saveTasks();
-            renderTasks();
+            const confirmDelete = confirm("Are you sure you want to delete this task?");
+            if (confirmDelete) {
+                tasks.splice(index, 1);
+                saveTasks();
+                renderTasks();
+            }
         });
 
         // Append elements to task item
