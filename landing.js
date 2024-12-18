@@ -140,12 +140,12 @@ addTaskButton.addEventListener("click", () => {
     }
 
     const newTask = {
-        text: taskText,
+        TaskTitle: taskText,
         description: taskDescription,
         dueDate: taskDueDateValue,
         priority: taskPriorityValue,
         done: false,
-        username: loggedinUser.username /\
+        username: loggedinUser.username 
     };
 
     tasks.push(newTask);
