@@ -14,7 +14,7 @@ const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"));
 if (loggedinUser) {
     welcomeMessage.textContent = `Welcome, ${loggedinUser.username}!`;
 } else {
-    window.location.href = "index.html"; 
+    window.location.href = "index.html";
 }
 
 // Profile button logic (ensures only one listener)
@@ -36,7 +36,11 @@ const saveTasks = () => {
 
 const renderTasks = (filteredTasks = tasks) => {
     taskList.innerHTML = "";
-    filteredTasks.sort((a, b) => {
+    
+    // Filter tasks based on the logged-in user
+    const userTasks = filteredTasks.filter(task => task.username === loggedinUser.username);
+    
+    userTasks.sort((a, b) => {
         const priorityOrder = { high: 1, medium: 2, low: 3 };
         const priorityComparison = priorityOrder[a.priority] - priorityOrder[b.priority];
         if (priorityComparison !== 0) return priorityComparison;
@@ -45,7 +49,7 @@ const renderTasks = (filteredTasks = tasks) => {
     });
 
     // Generate task items
-    filteredTasks.forEach((task, index) => {
+    userTasks.forEach((task, index) => {
         const taskItem = document.createElement("li");
         taskItem.className = "task-item";
 
@@ -80,8 +84,8 @@ const renderTasks = (filteredTasks = tasks) => {
         editButton.addEventListener("click", () => {
             const updatedText = prompt("Edit task name:", task.text);
             const updatedDescription = prompt("Edit description:", task.description);
-            if (updatedText) tasks[index].text = updatedText;
-            if (updatedDescription !== null) tasks[index].description = updatedDescription;
+            if (updatedText) task.text = updatedText;
+            if (updatedDescription !== null) task.description = updatedDescription;
             saveTasks();
             renderTasks();
         });
@@ -90,7 +94,7 @@ const renderTasks = (filteredTasks = tasks) => {
         const doneButton = document.createElement("button");
         doneButton.textContent = task.done ? "Undo" : "Done";
         doneButton.addEventListener("click", () => {
-            tasks[index].done = !tasks[index].done;
+            task.done = !task.done;
             saveTasks();
             renderTasks();
         });
@@ -99,7 +103,8 @@ const renderTasks = (filteredTasks = tasks) => {
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         deleteButton.addEventListener("click", () => {
-            tasks.splice(index, 1);
+            const taskIndex = tasks.indexOf(task);
+            tasks.splice(taskIndex, 1);
             saveTasks();
             renderTasks();
         });
@@ -135,7 +140,8 @@ addTaskButton.addEventListener("click", () => {
         description: taskDescription,
         dueDate: taskDueDateValue,
         priority: taskPriorityValue,
-        done: false
+        done: false,
+        username: loggedinUser.username // Associate task with the logged-in user
     };
 
     tasks.push(newTask);
@@ -154,6 +160,8 @@ signOutButton.addEventListener("click", () => {
     localStorage.removeItem("loggedinUser");
     window.location.href = "index.html";
 });
+
+// Search bar logic
 searchBar.addEventListener("input", () => {
     const searchQuery = searchBar.value.toLowerCase();
     const filteredTasks = tasks.filter(task =>
