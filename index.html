@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Portal</title>
+    <title>Time Managment System</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="registerPage" class="container active">
         <h2>Create an Account</h2>
         <div id="message" class="message"></div>
-        <input type="text" id="username" placeholder="Choose a username" required>
+        <input type="text" id="Name" placeholder="Enter your name" required>
         <input type="email" id="email" placeholder="Enter your email" required>
         <input type="password" id="password" placeholder="Set a password" required>
         <button id="registerButton">Sign Up</button>
@@ -21,10 +21,10 @@
     <div id="loginPage" class="container">
         <h2>Log In</h2>
         <div id="loginMessage" class="message"></div>
-        <input type="text" id="loginUsername" placeholder="Enter your username" required>
         <input type="email" id="loginemail" placeholder="Enter your email" required>
         <input type="password" id="loginPassword" placeholder="Enter your password" required>
         <button id="loginButton">Log In</button>
+        
         <div class="redirect">
             <span>Don't have an account? <a href="#" id="redirectToRegister">Sign Up</a></span>
         </div>

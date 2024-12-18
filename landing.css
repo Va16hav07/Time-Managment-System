@@ -1,86 +1,146 @@
+/* CSS Variables for Consistency and Easy Theme Management */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #4a5568;
+    --accent-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --light-bg: #eef2f3;
+    --dark-bg: #333;
+    --font-family: Arial, sans-serif;
+}
+
+/* General Reset and Body Styling */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #eef2f3;
-    background-image: url('https://bestofmotivation.com/wp-content/uploads/2023/03/time-management.png');
-    background-size: cover; 
-    background-position: center; 
+    font-family: var(--font-family);
+    background: linear-gradient(
+            rgba(0, 0, 0, 0.6), /* Darker Overlay */
+            rgba(0, 0, 0, 0.6)
+        ),
+        url('https://bestofmotivation.com/wp-content/uploads/2023/03/time-management.png');
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    color: #333;
+    color: var(--dark-bg);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    animation: fadeInBackground 1s ease-in-out;
 }
 
+/* Fade-in Animation for the Body Background */
+@keyframes fadeInBackground {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Headings */
 h1, h2 {
     margin: 0;
     font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* Links */
 a {
     text-decoration: none;
     color: inherit;
+    transition: color 0.3s;
 }
 
+a:hover {
+    color: var(--primary-color);
+}
+
+/* Top Bar */
 .top-bar {
-    background-color: #4a5568;
-    color: #fff;
+    background: var(--dark-bg);
+       color: #fff;
     padding: 15px 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow:0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.5s ease-in-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
 }
 
 .top-bar .top-bar-right {
     display: flex;
     align-items: center;
 }
+
+/* Profile Button */
 .profile-button, .sign-out-button {
-    background-color: #007bff;
-    color: white;
+    background: var(--primary-color);
+    color: #fff;
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: transform 0.3s ease, background 0.3s ease;
     margin-left: 10px;
     font-size: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .profile-button:hover, .sign-out-button:hover {
-    background-color: #0056b3;
+    background: var(--accent-color);
     transform: scale(1.05);
 }
 
-
+/* Main Content Area */
 .main {
     display: flex;
-    flex: 1; 
-    background-color: #eef2f3;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
 .content {
-    margin: 20px auto;
-    width: auto;
+    width: 100%;
     max-width: 900px;
-    background-color: #eef2f3;
-    background-image: url('https://bestofmotivation.com/wp-content/uploads/2023/03/time-management.png');
-    background-size:auto; 
-    background-position: center; 
-    background-repeat: no-repeat;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
     border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: scaleUp 0.5s ease-in-out;
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .content h2 {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     margin-bottom: 15px;
-    color: #4a5568;
+    color: var(--secondary-color);
     text-align: center;
 }
 
+/* Task Input Form */
 .task-input {
     display: flex;
     flex-wrap: wrap;
@@ -88,141 +148,143 @@ a {
     margin-bottom: 20px;
 }
 
-.task-input input, 
+.task-input input,
 .task-input select {
     flex: 1;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--primary-color);
     border-radius: 5px;
     font-size: 1rem;
-    transition: border-color 0.3s;
+    transition: box-shadow 0.3s, border-color 0.3s;
 }
 
-.task-input input:focus, 
+.task-input input:focus,
 .task-input select:focus {
     outline: none;
-    border-color: #28a745;
-    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
 }
 
 .task-input button {
-    background-color: #007bff;
-    color: #fff;
+    background: var(--primary-color);
+    color:white;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.3s, transform 0.3s;
 }
 
 .task-input button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+    background: var(--accent-color);
+    transform: scale(1.1);
 }
 
-.task-list li button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-left: 5px;
-    font-size: 0.8rem;
+/* Task List Styling */
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.task-list li button:hover {
-    background-color: #218838;
-}
-
-.task-list li button.edit {
-    background-color: #ffc107;
-}
-
-.task-list li button.edit:hover {
-    background-color: #e0a800;
-}
-
-.task-list li button.delete {
-    background-color: #dc3545;
-}
-
-.task-list li button.delete:hover {
-    background-color: #c82333;
-}
-
-.task-item {
+.task-list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #ffe0e0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--primary-color);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background 0.3s, transform 0.3s;
 }
 
-.task-item div {
-    display: flex;
-    gap: 5px;
-}
-
-.task-item:hover {
-    background-color: #f1f1f1;
+.task-list li:hover {
+    background: var(--light-bg);
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.task-item span {
+.task-list li span {
     font-size: 1rem;
-    font-weight: 600;
-    color: #007bff; 
+    font-weight: bold;
+    color: var(--secondary-color);
+
 }
 
-
-.task-item button {
-    background-color: #007bff;
-    color: #007bff;
-    border: none;
+.task-list li button {
     padding: 5px 10px;
     border-radius: 5px;
+    border: none;
     cursor: pointer;
     font-size: 0.9rem;
-    margin-right: 5px;
-    transition: background-color 0.3s;
+    transition: background 0.3s, transform 0.3s;
 }
 
-.task-item button:hover {
-    background-color: #007bff;
+.task-list li :hover {  
+    background: var(--light-bg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    
+    transform: scale(1.05);
 }
 
-button.edit {
-    background-color: #ffc107;
+.task-list li button.edit {
+    background: lightgrey;
 }
 
-button.edit:hover {
-    background-color: #e0a800;
+.task-list li button.edit:hover {
+    background:  #e0a800;;
+    transform: scale(1.05);
 }
 
-button.delete {
-    background-color: #dc3545;
+.task-list li button.delete {
+    background: lightgrey;
+}
+.task-list li button.done {
+    background: lightgrey;
 }
 
-button.delete:hover {
-    background-color: #c82333;
+.task-list li button.done:hover {
+    background:  #e0a800;
+    transform: scale(1.05);
 }
 
+.task-list li button.delete:hover {
+    background: #c82333;
+    transform: scale(1.05);
+}
+
+
+.task-list li button.edit:hover {
+    background: grey;
+    transform: scale(1.05);
+}
+
+/* .task-list li button.delete:hover {
+    background: #c82333;
+    transform: scale(1.05);
+} */
+
+/* Search Bar */
 .search-bar {
-    width: 60%; 
+    width: 60%;
     max-width: 400px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
     display: block;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .search-bar:focus {
-    border-color: #28a745;
+    border-color: var(--accent-color);
     outline: none;
-    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
 }
+
+/* Profile Icon and Dropdown Menu */
 .profile-icon-container {
     position: relative;
     display: inline-block;
@@ -233,6 +295,7 @@ button.delete:hover {
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
+    border: 2px solid var(--accent-color);
 }
 
 .dropdown-menu {
@@ -247,38 +310,32 @@ button.delete:hover {
     display: flex;
     flex-direction: column;
     min-width: 150px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: opacity 0.3s, transform 0.3s;
 }
 
-.dropdown-menu.hidden {
-    display: none;
+.profile-icon-container:hover .dropdown-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
 }
 
 .dropdown-item {
     padding: 10px 15px;
-    border: none;
-    text-align: left;
-    width: 100%;
+    font-size: 14px;
     background: none;
     cursor: pointer;
-    font-size: 14px;
+    transition: background 0.3s;
 }
 
 .dropdown-item:hover {
-    background-color: #007bff;
+    background-color: var(--primary-color);
+    color: #fff;
 }
 
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
+/* Responsive Design */
 @media (max-width: 768px) {
     .top-bar {
         flex-direction: column;
@@ -291,5 +348,9 @@ button.delete:hover {
 
     .task-input button {
         width: 100%;
+    }
+
+    .search-bar {
+        width: 90%;
     }
 }
