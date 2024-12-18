@@ -11,10 +11,10 @@ if (!loggedinUser) {
 }
 
 editProfileButton.addEventListener("click", () => {
-    const newUsername = prompt("Enter your new Name:", loggedinUser.name);
+    const newName = prompt("Enter your new Name:", loggedinUser.name);
     const newEmail = prompt("Enter your new email:", loggedinUser.email);
 
-    if (newUsername && newEmail && newPassword) {
+    if (newName && newEmail) {
         loggedinUser.name = newName;
         loggedinUser.email = newEmail;
         localStorage.setItem("loggedinUser", JSON.stringify(loggedinUser));

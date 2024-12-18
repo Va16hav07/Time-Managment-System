@@ -11,65 +11,40 @@ const taskList = document.getElementById("taskList");
 const searchBar = document.getElementById("searchBar");
 const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"));
 
-
 if (loggedinUser) {
     welcomeMessage.textContent = `Welcome, ${loggedinUser.name}!`;
 } else {
     window.location.href = "index.html";
 }
 
-// Fetch tasks for the logged-in user
-let tasks = JSON.parse(localStorage.getItem(loggedinUser.username + "_tasks")) || [];
+profileIcon.addEventListener("click", (event) => {
+    event.stopPropagation(); 
+    dropdownMenu.classList.toggle("hidden");
+});
+
+document.addEventListener("click", (event) => {
+    if (!dropdownMenu.contains(event.target) && !profileIcon.contains(event.target)) {
+        dropdownMenu.classList.add("hidden");
+    }
+});
+function navigateTo(url) {
+    window.location.href = url;
+}
+
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 // Function to save tasks to localStorage
 const saveTasks = () => {
-    localStorage.setItem(loggedinUser.username + "_tasks", JSON.stringify(tasks));
-};
-//
-
-const updateTaskStatus = () => {
-    const currentDate = new Date(); // Get today's date
-
-    // Filter tasks for the logged-in user
-    const userTasks = tasks.filter(task => task.username === loggedinUser.username);
-
-    userTasks.forEach(task => {
-        const taskDueDate = task.dueDate ? new Date(task.dueDate) : null;
-
-        if (taskDueDate && taskDueDate < currentDate) {
-            task.done = false; // Mark the task as incomplete if it's past due
-        }
-    });
-
-    // Update the main tasks array with the modified userTasks
-    tasks = tasks.map(task => {
-        if (task.username === loggedinUser.username) {
-            const updatedTask = userTasks.find(userTask => userTask.TaskTitle === task.TaskTitle);
-            return updatedTask ? updatedTask : task;
-        }
-        return task;
-    });
-
-    saveTasks(); // Save updated tasks to localStorage
-    renderTasks(); // Re-render the task list with updated statuses
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 
-
-// Function to render tasks
 const renderTasks = (filteredTasks = tasks) => {
     taskList.innerHTML = "";
-
-    // Check if there are no tasks to display
-    if (filteredTasks.length === 0) {
-        const noTaskMessage = document.createElement("p");
-        noTaskMessage.textContent = "No Task Available";
-        noTaskMessage.style.textAlign = "center";
-        noTaskMessage.style.color = "#888";
-        taskList.appendChild(noTaskMessage);
-        return; // Exit the function early
-    }
-
-    filteredTasks.sort((a, b) => {
+    
+    // Filter tasks based on the logged-in user
+    const userTasks = filteredTasks.filter(task => task.Name === loggedinUser.name);
+    
+    userTasks.sort((a, b) => {
         const priorityOrder = { high: 1, medium: 2, low: 3 };
         const priorityComparison = priorityOrder[a.priority] - priorityOrder[b.priority];
         if (priorityComparison !== 0) return priorityComparison;
@@ -77,13 +52,14 @@ const renderTasks = (filteredTasks = tasks) => {
         return new Date(a.dueDate || "9999-12-31") - new Date(b.dueDate || "9999-12-31");
     });
 
-    filteredTasks.forEach((task, index) => {
+    // Generate task items
+    userTasks.forEach((task, index) => {
         const taskItem = document.createElement("li");
         taskItem.className = "task-item";
 
         // Task label
         const taskLabel = document.createElement("span");
-        taskLabel.textContent = task.text;
+        taskLabel.textContent = task.taskTitle;
         taskLabel.style.textDecoration = task.done ? "line-through" : "none";
         taskLabel.style.color = task.done ? "gray" : "red";
 
@@ -106,41 +82,39 @@ const renderTasks = (filteredTasks = tasks) => {
         `;
         taskDetails.style.marginTop = "5px";
 
-        // Edit button
-        const editButton = document.createElement("button");
-        editButton.classList.add("edit");
-        editButton.textContent = "Edit";
-        editButton.addEventListener("click", () => {
-            const updatedText = prompt("Edit task name:", task.text);
-            const updatedDescription = prompt("Edit description:", task.description);
-            if (updatedText) task.text = updatedText;
-            if (updatedDescription !== null) task.description = updatedDescription;
-            saveTasks();
-            renderTasks();
-        });
-
-        // Done button
-        const doneButton = document.createElement("button");
-        doneButton.classList.add("done");
-        doneButton.textContent = task.done ? "Undo" : "Done";
-        doneButton.addEventListener("click", () => {
-            task.done = !task.done;
-            saveTasks();
-            renderTasks();
-        });
-
-        // Delete button
-        const deleteButton = document.createElement("button");
-        deleteButton.classList.add("delete");
-        deleteButton.textContent = "Delete";
-        deleteButton.addEventListener("click", () => {
-            const confirmDelete = confirm("Are you sure you want to delete this task?");
-            if (confirmDelete) {
-                tasks.splice(index, 1);
-                saveTasks();
-                renderTasks();
-            }
-        });
+              // Edit button
+              const editButton = document.createElement("button");
+              editButton.textContent = "Edit";
+              editButton.classList.add("edit"); // Add class
+              editButton.addEventListener("click", () => {
+                  const updatedText = prompt("Edit task Title:", task.taskTitle);
+                  const updatedDescription = prompt("Edit description:", task.description);
+                  if (updatedText) task.taskTitle = updatedText;
+                  if (updatedDescription !== null) task.description = updatedDescription;
+                  saveTasks();
+                  renderTasks();
+              });
+      
+              // Done button
+              const doneButton = document.createElement("button");
+              doneButton.textContent = task.done ? "Undo" : "Done";
+              doneButton.classList.add("done"); // Add class
+              doneButton.addEventListener("click", () => {
+                  task.done = !task.done;
+                  saveTasks();
+                  renderTasks();
+              });
+      
+              // Delete button
+              const deleteButton = document.createElement("button");
+              deleteButton.textContent = "Delete";
+              deleteButton.classList.add("delete"); // Add class
+              deleteButton.addEventListener("click", () => {
+                  const taskIndex = tasks.indexOf(task);
+                  tasks.splice(taskIndex, 1);
+                  saveTasks();
+                  renderTasks();
+              });
 
         // Append elements to task item
         taskItem.appendChild(taskLabel);
@@ -169,12 +143,12 @@ addTaskButton.addEventListener("click", () => {
     }
 
     const newTask = {
-        text: taskText, // Changed TaskTitle to text
+        taskTitle: taskText, 
         description: taskDescription,
         dueDate: taskDueDateValue,
         priority: taskPriorityValue,
         done: false,
-        username: loggedinUser.username
+        Name: loggedinUser.name 
     };
 
     tasks.push(newTask);
@@ -198,24 +172,8 @@ signOutButton.addEventListener("click", () => {
 searchBar.addEventListener("input", () => {
     const searchQuery = searchBar.value.toLowerCase();
     const filteredTasks = tasks.filter(task =>
-        task.text.toLowerCase().includes(searchQuery) ||
+        task.taskTitle.toLowerCase().includes(searchQuery) ||
         (task.description && task.description.toLowerCase().includes(searchQuery))
     );
     renderTasks(filteredTasks);
 });
-
-// Profile icon dropdown toggle
-profileIcon.addEventListener("click", (event) => {
-    event.stopPropagation();
-    dropdownMenu.classList.toggle("hidden");
-});
-
-document.addEventListener("click", (event) => {
-    if (!dropdownMenu.contains(event.target) && !profileIcon.contains(event.target)) {
-        dropdownMenu.classList.add("hidden");
-    }
-});
-
-function navigateTo(url) {
-    window.location.href = url;
-}

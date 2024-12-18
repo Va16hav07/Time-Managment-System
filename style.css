@@ -43,7 +43,6 @@ body {
 
 .container button {
     width: 100%;
-
     padding: 12px;
     background-color: #575e65; 
     color: #ffffff;
@@ -52,6 +51,7 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 12px; 
 }
 
 

@@ -228,43 +228,31 @@ a:hover {
     
     transform: scale(1.05);
 }
-
 .task-list li button.edit {
     background: lightgrey;
 }
 
 .task-list li button.edit:hover {
-    background:  #e0a800;;
+    background: #e0a800;
     transform: scale(1.05);
 }
 
 .task-list li button.delete {
     background: lightgrey;
 }
+
 .task-list li button.done {
     background: lightgrey;
 }
 
 .task-list li button.done:hover {
-    background:  #e0a800;
+    background: #0dff00;
     transform: scale(1.05);
 }
-
 .task-list li button.delete:hover {
     background: #c82333;
     transform: scale(1.05);
 }
-
-
-.task-list li button.edit:hover {
-    background: grey;
-    transform: scale(1.05);
-}
-
-/* .task-list li button.delete:hover {
-    background: #c82333;
-    transform: scale(1.05);
-} */
 
 /* Search Bar */
 .search-bar {
