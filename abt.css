@@ -1,0 +1,149 @@
+/* General Styles for Dark Mode */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #e0e0e0;
+    background-color: #121212; /* Dark background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Header Section */
+.header {
+    background-color: #1f1f1f; /* Darker background for the header */
+    color: #00bcd4; /* Bright accent color */
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header h1 {
+    margin: 0;
+}
+
+/* About Container */
+.about-container {
+    background: #1e1e1e; /* Dark background for the main content */
+    padding: 20px;
+    margin: 20px 10px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    max-width: 900px;
+    text-align: center;
+}
+
+/* Intro Section */
+.intro-section {
+    margin-bottom: 20px;
+}
+
+.intro-gif {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Mission Section */
+.mission-section {
+    margin: 20px 0;
+}
+
+/* Features Section */
+.features-section {
+    margin: 20px 0;
+}
+
+.features-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.feature-item {
+    flex: 1 1 calc(33% - 20px);
+    background: #282828; /* Slightly lighter background */
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+}
+
+.feature-item img {
+    width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.feature-item h3 {
+    margin: 10px 0 5px;
+    color: #00bcd4;
+}
+
+.feature-item p {
+    font-size: 0.9rem;
+    color: #bdbdbd;
+}
+
+/* Buttons Section */
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #00bcd4; /* Bright accent color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #008c9e;
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    background-color: #1f1f1f;
+    color: #00bcd4;
+    padding: 10px;
+    text-align: center;
+    margin-top: auto;
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .features-grid {
+        flex-direction: column;
+    }
+
+    .feature-item {
+        flex: 1 1 100%;
+    }
+
+    .intro-gif {
+        max-height: 200px;
+    }
+}
+
