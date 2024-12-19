@@ -233,7 +233,7 @@ a:hover {
 }
 
 .task-list li button.edit:hover {
-    background: #e0a800;
+    background: grey;
     transform: scale(1.05);
 }
 
@@ -246,11 +246,11 @@ a:hover {
 }
 
 .task-list li button.done:hover {
-    background: #0dff00;
+    background: #28a745;
     transform: scale(1.05);
 }
 .task-list li button.delete:hover {
-    background: #c82333;
+    background: #ff4d4d;
     transform: scale(1.05);
 }
 

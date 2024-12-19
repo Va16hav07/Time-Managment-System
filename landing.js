@@ -162,10 +162,17 @@ addTaskButton.addEventListener("click", () => {
     taskPriority.value = "low";
 });
 
-// Sign out logic
-signOutButton.addEventListener("click", () => {
-    localStorage.removeItem("loggedinUser");
-    window.location.href = "index.html";
+
+
+signOutButton.addEventListener("click", () => { 
+    // Ask for confirmation before signing out
+    const isConfirmed = confirm("Are you sure you want to sign out?");
+
+    if (isConfirmed) {
+        // Remove the logged-in user data and redirect
+        localStorage.removeItem("loggedinUser");
+        window.location.href = "index.html";
+    }
 });
 
 // Search bar logic
