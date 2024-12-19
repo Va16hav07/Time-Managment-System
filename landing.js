@@ -9,6 +9,7 @@ const taskPriority = document.getElementById("taskPriority");
 const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
 const searchBar = document.getElementById("searchBar");
+
 const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"));
 
 if (loggedinUser) {
@@ -17,34 +18,28 @@ if (loggedinUser) {
     window.location.href = "index.html";
 }
 
-profileIcon.addEventListener("click", (event) => {
-    event.stopPropagation(); 
-    dropdownMenu.classList.toggle("hidden");
-});
+// Unique key for storing the tasks of the current user
+const userTaskKey = `${loggedinUser.name}_tasks`;
 
-document.addEventListener("click", (event) => {
-    if (!dropdownMenu.contains(event.target) && !profileIcon.contains(event.target)) {
-        dropdownMenu.classList.add("hidden");
-    }
-});
-function navigateTo(url) {
-    window.location.href = url;
-}
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+// Load tasks for the current user or initialize as an empty array
+let tasks = JSON.parse(localStorage.getItem(userTaskKey)) || [];
 
+// Save tasks to local storage under the user's unique key
 const saveTasks = () => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem(userTaskKey, JSON.stringify(tasks));
 };
 
+// Format date and time for display
 const formatTime = (date) => {
     return new Date(date).toLocaleString();
 };
 
+// Render the tasks for the current user
 const renderTasks = (filteredTasks = tasks) => {
     taskList.innerHTML = "";
-    
-    const userTasks = filteredTasks.filter(task => task.Name === loggedinUser.name);
-    
+
+    const userTasks = filteredTasks.filter((task) => task.Name === loggedinUser.name);
+
     userTasks.sort((a, b) => {
         const priorityOrder = { high: 1, medium: 2, low: 3 };
         const priorityComparison = priorityOrder[a.priority] - priorityOrder[b.priority];
@@ -52,7 +47,7 @@ const renderTasks = (filteredTasks = tasks) => {
         return new Date(a.dueDate || "9999-12-31") - new Date(b.dueDate || "9999-12-31");
     });
 
-    userTasks.forEach((task, index) => {
+    userTasks.forEach((task) => {
         const taskItem = document.createElement("li");
         taskItem.className = "task-item";
 
@@ -68,15 +63,17 @@ const renderTasks = (filteredTasks = tasks) => {
         description.style.color = "#555";
 
         taskLabel.addEventListener("click", () => {
-            description.style.display = description.style.display === "none" ? "block" : "none";
+            description.style.display =
+                description.style.display === "none" ? "block" : "none";
         });
 
-        // Time tracking information
         const timeInfo = document.createElement("div");
         timeInfo.style.marginTop = "5px";
-        timeInfo.innerHTML = task.startTime ? 
-            `Started: ${formatTime(task.startTime)}${task.endTime ? ` | Ended: ${formatTime(task.endTime)}` : ''}` : 
-            'Not started yet';
+        timeInfo.innerHTML = task.startTime
+            ? `Started: ${formatTime(task.startTime)}${
+                  task.endTime ? ` | Ended: ${formatTime(task.endTime)}` : ""
+              }`
+            : "Not started yet";
 
         const taskDetails = document.createElement("div");
         taskDetails.innerHTML = `
@@ -85,10 +82,12 @@ const renderTasks = (filteredTasks = tasks) => {
         `;
         taskDetails.style.marginTop = "5px";
 
-        // Start/End Task button
         const timeTrackButton = document.createElement("button");
-        timeTrackButton.classList.add(task.startTime && !task.endTime ? "end-task" : "start-task");
-        timeTrackButton.textContent = task.startTime && !task.endTime ? "End Task" : "Start Task";
+        timeTrackButton.classList.add(
+            task.startTime && !task.endTime ? "end-task" : "start-task"
+        );
+        timeTrackButton.textContent =
+            task.startTime && !task.endTime ? "End Task" : "Start Task";
         timeTrackButton.disabled = task.done || (task.startTime && task.endTime);
 
         timeTrackButton.addEventListener("click", () => {
@@ -114,7 +113,10 @@ const renderTasks = (filteredTasks = tasks) => {
         editButton.classList.add("edit");
         editButton.addEventListener("click", () => {
             const updatedText = prompt("Edit task Title:", task.taskTitle);
-            const updatedDescription = prompt("Edit description:", task.description);
+            const updatedDescription = prompt(
+                "Edit description:",
+                task.description
+            );
             if (updatedText) task.taskTitle = updatedText;
             if (updatedDescription !== null) task.description = updatedDescription;
             saveTasks();
@@ -137,8 +139,7 @@ const renderTasks = (filteredTasks = tasks) => {
         deleteButton.textContent = "Delete";
         deleteButton.classList.add("delete");
         deleteButton.addEventListener("click", () => {
-            const taskIndex = tasks.indexOf(task);
-            tasks.splice(taskIndex, 1);
+            tasks = tasks.filter((t) => t !== task);
             saveTasks();
             renderTasks();
         });
@@ -178,7 +179,7 @@ addTaskButton.addEventListener("click", () => {
         done: false,
         Name: loggedinUser.name,
         startTime: null,
-        endTime: null
+        endTime: null,
     };
 
     tasks.push(newTask);
@@ -192,13 +193,10 @@ addTaskButton.addEventListener("click", () => {
     taskPriority.value = "low";
 });
 
-
-signOutButton.addEventListener("click", () => { 
-    // Ask for confirmation before signing out
+// Sign out logic
+signOutButton.addEventListener("click", () => {
     const isConfirmed = confirm("Are you sure you want to sign out?");
-
     if (isConfirmed) {
-        // Remove the logged-in user data and redirect
         localStorage.removeItem("loggedinUser");
         window.location.href = "index.html";
     }
@@ -207,9 +205,11 @@ signOutButton.addEventListener("click", () => {
 // Search bar logic
 searchBar.addEventListener("input", () => {
     const searchQuery = searchBar.value.toLowerCase();
-    const filteredTasks = tasks.filter(task =>
-        task.taskTitle.toLowerCase().includes(searchQuery) ||
-        (task.description && task.description.toLowerCase().includes(searchQuery))
+    const filteredTasks = tasks.filter(
+        (task) =>
+            task.taskTitle.toLowerCase().includes(searchQuery) ||
+            (task.description &&
+                task.description.toLowerCase().includes(searchQuery))
     );
     renderTasks(filteredTasks);
 });
