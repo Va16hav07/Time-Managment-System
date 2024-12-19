@@ -20,24 +20,13 @@ if (loggedinUser) {
     window.location.href = "index.html";
 }
 
-profileIcon.addEventListener("click", (event) => {
-    event.stopPropagation(); 
-    dropdownMenu.classList.toggle("hidden");
-});
-
-document.addEventListener("click", (event) => {
-    if (!dropdownMenu.contains(event.target) && !profileIcon.contains(event.target)) {
-        dropdownMenu.classList.add("hidden");
-    }
-});
-
-// Task and Timer Management
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+const userTaskKey = `${loggedinUser.name}_task`;
+let tasks = JSON.parse(localStorage.getItem(userTaskKey)) || [];
 let timers = {};
 let startTimes = {};
 
 const saveTasks = () => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem(userTaskKey, JSON.stringify(tasks));
 };
 
 const formatTime = (seconds) => {
@@ -92,7 +81,7 @@ const stopTimer = (taskId) => {
 const renderTasks = (filteredTasks = tasks) => {
     taskList.innerHTML = "";
     
-    const userTasks = filteredTasks.filter(task => task.Name === loggedinUser.name);
+    const userTasks = filteredTasks;
     
     userTasks.sort((a, b) => {
         const priorityOrder = { high: 1, medium: 2, low: 3 };
@@ -248,7 +237,6 @@ addTaskButton.addEventListener("click", () => {
         dueDate: taskDueDateValue,
         priority: taskPriorityValue,
         done: false,
-        Name: loggedinUser.name,
         elapsedSeconds: 0,
         isRunning: false
     };
