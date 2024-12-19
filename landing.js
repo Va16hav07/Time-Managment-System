@@ -285,3 +285,6 @@ window.addEventListener('beforeunload', () => {
         }
     });
 });
+const navigateTo = (url) => {
+    window.location.href = url;
+};
