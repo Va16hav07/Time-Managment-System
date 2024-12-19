@@ -342,3 +342,18 @@ a:hover {
         width: 90%;
     }
 }
+
+.start-task {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.end-task {
+    background-color: #f44336;
+    color: white;
+}
+
+.start-task:disabled, .end-task:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}

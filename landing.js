@@ -30,40 +30,37 @@ document.addEventListener("click", (event) => {
 function navigateTo(url) {
     window.location.href = url;
 }
-
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-// Function to save tasks to localStorage
 const saveTasks = () => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
+const formatTime = (date) => {
+    return new Date(date).toLocaleString();
 };
 
 const renderTasks = (filteredTasks = tasks) => {
     taskList.innerHTML = "";
     
-    // Filter tasks based on the logged-in user
     const userTasks = filteredTasks.filter(task => task.Name === loggedinUser.name);
     
     userTasks.sort((a, b) => {
         const priorityOrder = { high: 1, medium: 2, low: 3 };
         const priorityComparison = priorityOrder[a.priority] - priorityOrder[b.priority];
         if (priorityComparison !== 0) return priorityComparison;
-
         return new Date(a.dueDate || "9999-12-31") - new Date(b.dueDate || "9999-12-31");
     });
 
-    // Generate task items
     userTasks.forEach((task, index) => {
         const taskItem = document.createElement("li");
         taskItem.className = "task-item";
 
-        // Task label
         const taskLabel = document.createElement("span");
         taskLabel.textContent = task.taskTitle;
         taskLabel.style.textDecoration = task.done ? "line-through" : "none";
         taskLabel.style.color = task.done ? "gray" : "red";
 
-        // Toggle description display
         const description = document.createElement("div");
         description.textContent = task.description || "No description provided.";
         description.style.display = "none";
@@ -74,7 +71,13 @@ const renderTasks = (filteredTasks = tasks) => {
             description.style.display = description.style.display === "none" ? "block" : "none";
         });
 
-        // Task details
+        // Time tracking information
+        const timeInfo = document.createElement("div");
+        timeInfo.style.marginTop = "5px";
+        timeInfo.innerHTML = task.startTime ? 
+            `Started: ${formatTime(task.startTime)}${task.endTime ? ` | Ended: ${formatTime(task.endTime)}` : ''}` : 
+            'Not started yet';
+
         const taskDetails = document.createElement("div");
         taskDetails.innerHTML = `
             <span>Due: ${task.dueDate || "No due date"}</span> | 
@@ -82,44 +85,69 @@ const renderTasks = (filteredTasks = tasks) => {
         `;
         taskDetails.style.marginTop = "5px";
 
-              // Edit button
-              const editButton = document.createElement("button");
-              editButton.textContent = "Edit";
-              editButton.classList.add("edit"); // Add class
-              editButton.addEventListener("click", () => {
-                  const updatedText = prompt("Edit task Title:", task.taskTitle);
-                  const updatedDescription = prompt("Edit description:", task.description);
-                  if (updatedText) task.taskTitle = updatedText;
-                  if (updatedDescription !== null) task.description = updatedDescription;
-                  saveTasks();
-                  renderTasks();
-              });
-      
-              // Done button
-              const doneButton = document.createElement("button");
-              doneButton.textContent = task.done ? "Undo" : "Done";
-              doneButton.classList.add("done"); // Add class
-              doneButton.addEventListener("click", () => {
-                  task.done = !task.done;
-                  saveTasks();
-                  renderTasks();
-              });
-      
-              // Delete button
-              const deleteButton = document.createElement("button");
-              deleteButton.textContent = "Delete";
-              deleteButton.classList.add("delete"); // Add class
-              deleteButton.addEventListener("click", () => {
-                  const taskIndex = tasks.indexOf(task);
-                  tasks.splice(taskIndex, 1);
-                  saveTasks();
-                  renderTasks();
-              });
+        // Start/End Task button
+        const timeTrackButton = document.createElement("button");
+        timeTrackButton.classList.add(task.startTime && !task.endTime ? "end-task" : "start-task");
+        timeTrackButton.textContent = task.startTime && !task.endTime ? "End Task" : "Start Task";
+        timeTrackButton.disabled = task.done || (task.startTime && task.endTime);
 
-        // Append elements to task item
+        timeTrackButton.addEventListener("click", () => {
+            if (!task.startTime) {
+                task.startTime = new Date().toISOString();
+                timeTrackButton.textContent = "End Task";
+                timeTrackButton.classList.remove("start-task");
+                timeTrackButton.classList.add("end-task");
+            } else if (!task.endTime) {
+                task.endTime = new Date().toISOString();
+                const isCompleted = confirm("Have you completed this task?");
+                if (isCompleted) {
+                    task.done = true;
+                }
+                timeTrackButton.disabled = true;
+            }
+            saveTasks();
+            renderTasks();
+        });
+
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.classList.add("edit");
+        editButton.addEventListener("click", () => {
+            const updatedText = prompt("Edit task Title:", task.taskTitle);
+            const updatedDescription = prompt("Edit description:", task.description);
+            if (updatedText) task.taskTitle = updatedText;
+            if (updatedDescription !== null) task.description = updatedDescription;
+            saveTasks();
+            renderTasks();
+        });
+
+        const doneButton = document.createElement("button");
+        doneButton.textContent = task.done ? "Undo" : "Done";
+        doneButton.classList.add("done");
+        doneButton.addEventListener("click", () => {
+            task.done = !task.done;
+            if (task.done && !task.endTime && task.startTime) {
+                task.endTime = new Date().toISOString();
+            }
+            saveTasks();
+            renderTasks();
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.classList.add("delete");
+        deleteButton.addEventListener("click", () => {
+            const taskIndex = tasks.indexOf(task);
+            tasks.splice(taskIndex, 1);
+            saveTasks();
+            renderTasks();
+        });
+
         taskItem.appendChild(taskLabel);
         taskItem.appendChild(description);
         taskItem.appendChild(taskDetails);
+        taskItem.appendChild(timeInfo);
+        taskItem.appendChild(timeTrackButton);
         taskItem.appendChild(editButton);
         taskItem.appendChild(doneButton);
         taskItem.appendChild(deleteButton);
@@ -143,12 +171,14 @@ addTaskButton.addEventListener("click", () => {
     }
 
     const newTask = {
-        taskTitle: taskText, 
+        taskTitle: taskText,
         description: taskDescription,
         dueDate: taskDueDateValue,
         priority: taskPriorityValue,
         done: false,
-        Name: loggedinUser.name 
+        Name: loggedinUser.name,
+        startTime: null,
+        endTime: null
     };
 
     tasks.push(newTask);
@@ -161,7 +191,6 @@ addTaskButton.addEventListener("click", () => {
     taskDueDate.value = "";
     taskPriority.value = "low";
 });
-
 
 
 signOutButton.addEventListener("click", () => { 
