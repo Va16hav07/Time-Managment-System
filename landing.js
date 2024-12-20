@@ -20,7 +20,25 @@ if (loggedinUser) {
     window.location.href = "index.html";
 }
 
-const userTaskKey = `${loggedinUser.name}_task`;
+// Generate a unique key for the user's tasks
+const getUserTaskKey = () => {
+    let userIndex = localStorage.getItem("userIndex");
+    if (!userIndex) {
+        userIndex = JSON.stringify({});
+        localStorage.setItem("userIndex", userIndex);
+    }
+    userIndex = JSON.parse(userIndex);
+
+    if (!userIndex[loggedinUser.name]) {
+        const nextIndex = Object.keys(userIndex).length + 1;
+        userIndex[loggedinUser.name] = nextIndex.toString().padStart(2, '0');
+        localStorage.setItem("userIndex", JSON.stringify(userIndex));
+    }
+
+    return `${userIndex[loggedinUser.name]}_task`;
+};
+
+const userTaskKey = getUserTaskKey();
 let tasks = JSON.parse(localStorage.getItem(userTaskKey)) || [];
 let timers = {};
 let startTimes = {};
