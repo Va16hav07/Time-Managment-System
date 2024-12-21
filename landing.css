@@ -1,4 +1,6 @@
-/* CSS Variables for Consistency and Easy Theme Management */
+
+
+
 :root {
     --primary-color: #007bff;
     --secondary-color: #4a5568;
@@ -60,12 +62,12 @@ a:hover {
 /* Top Bar */
 .top-bar {
     background: var(--dark-bg);
-       color: #fff;
+    color: #fff;
     padding: 15px 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow:0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     animation: slideDown 0.5s ease-in-out;
 }
 
@@ -175,6 +177,7 @@ a:hover {
     transition: background 0.3s, transform 0.3s;
 }
 
+/* Fixed gap issue for task input */
 .task-input button:hover {
     background: var(--accent-color);
     transform: scale(1.1);
@@ -182,9 +185,12 @@ a:hover {
 
 /* Task List Styling */
 .task-list {
+    display: flex;
     list-style: none;
     padding: 0;
     margin: 0;
+    gap: 10px;
+    flex-direction: column;
 }
 
 .task-list li {
@@ -210,7 +216,6 @@ a:hover {
     font-size: 1rem;
     font-weight: bold;
     color: var(--secondary-color);
-
 }
 
 .task-list li button {
@@ -225,33 +230,156 @@ a:hover {
 .task-list li :hover {  
     background: var(--light-bg);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    
-    transform: scale(1.05);
-}
-.task-list li button.edit {
-    background: lightgrey;
-}
-
-.task-list li button.edit:hover {
-    background: grey;
     transform: scale(1.05);
 }
 
-.task-list li button.delete {
-    background: lightgrey;
+/* Task Item Styling */
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+    position: relative;
+    border-left: 4px solid var(--accent-color);
+    box-sizing: border-box;
 }
 
-.task-list li button.done {
-    background: lightgrey;
+/* Fixed Alignment for Task Item */
+.task-item:hover {
+    background-color: #f4f6f7; /* Light background on hover */
 }
 
-.task-list li button.done:hover {
-    background: #28a745;
-    transform: scale(1.05);
+/* Task Item Text */
+.task-item span {
+    font-size: 1.1rem;
+    text-align: left;
+    flex: 1;
+    margin-right: 10px;
+
 }
-.task-list li button.delete:hover {
-    background: #ff4d4d;
-    transform: scale(1.05);
+
+.task-item button,
+.task-item i {
+    flex-shrink: 0; /* Prevent buttons/icons from shrinking */
+    margin-left: 5px; /* Add uniform spacing between buttons/icons */
+}
+
+/* Align Icons within the task item */
+.task-item .edit-icon,
+.task-item .done-icon,
+.task-item .delete-icon {
+    margin-left: 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+
+
+/* Task Priority and Timer Box */
+.priority, .timer-display {
+    width: 30%; /* Fixed width to align priority and timer with proper gap */
+    margin-right: 10px; /* Adjusted spacing between priority and timer */
+}
+
+/* Task Button */
+button.start-task {
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 10px;
+}
+
+button.start-task:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+.task-item-content {
+    display: flex;
+    align-items: center; /* Align vertically centered */
+    flex: 1; /* Let this take up most of the space */
+}
+/* Timer Display */
+.timer-display {
+    font-size: 18px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #333;
+    background-color: #f1f1f1;
+    padding: 8px 16px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    animation: timer-running 1s infinite linear;
+}
+
+@keyframes timer-running {
+    0% {
+        color: #333;
+    }
+    50% {
+        color: #28a745; /* Green color during timer running */
+    }
+    100% {
+        color: #333;
+    }
+}
+
+/* Stop Timer Button */
+button.end-task {
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    background-color: #dc3545; /* Red background */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 10px;
+}
+
+button.end-task:hover {
+    background-color: #c82333; /* Darker red on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+button.end-task:active {
+    background-color: #bd2130; /* Even darker red when pressed */
+    transform: scale(0.98); /* Slightly shrink the button */
+}
+
+/* Optional: Customizing the button to icon layout */
+.task-item i {
+    font-size: 1.5rem;
+    padding: 5px;
+    border-radius: 50%;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.task-item i:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Align the icons in the task item container */
+.task-item .icons-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 /* Search Bar */
@@ -323,37 +451,64 @@ a:hover {
     color: #fff;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .top-bar {
-        flex-direction: column;
-        text-align: center;
-    }
 
-    .task-input {
-        flex-direction: column;
-    }
 
-    .task-input button {
-        width: 100%;
-    }
+ 
 
-    .search-bar {
-        width: 90%;
-    }
+.delete-icon:hover {
+    color: #c0392b;  
+    transform: scale(1.4) rotate(45deg); 
+    background-color: rgba(231, 76, 60, 0.1);  
+    padding: 5px;
+    border-radius: 50%;
 }
 
-.start-task {
-    background-color: #4CAF50;
-    color: white;
+.delete-icon {
+    
+        width: 8px; /* Set smaller width */
+        height: 8px; /* Set smaller height */
+        font-size: 10px; /* Adjust font size to fit smaller container */
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 3px; /* Adjust spacing for smaller size */
+        color: var(--primary-icon-color);
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    
 }
 
-.end-task {
-    background-color: #f44336;
-    color: white;
+   
+
+/* Priority Label */
+
+.task-details {
+    width: 80px; /* Set a fixed width */
+    text-align: center; /* Center-align the text */
+    font-weight: bold; /* Make it visually distinct */
+    color: var(--primary-text-color); /* Set consistent text color */
+    padding: 5px; /* Add some padding for better aesthetics */
+    background: rgba(200, 200, 200, 0.3); /* Optional: Background for clarity */
+    border-radius: 4px; /* Optional: Rounded corners */
+    flex-shrink: 0; /* Prevent shrinking in the flex container */
 }
 
-.start-task:disabled, .end-task:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
+.edit-icon:hover {
+    color: #f1c40f;  /* Brighter golden color */
+    transform: rotate(360deg); /* Rotation on hover */
+    background-color: rgba(243, 156, 18, 0.1);  /* Light golden background */
+    padding: 5px;
+    border-radius: 50%;
 }
+
+
+
+.done-icon:hover {
+    color: #27ae60;  /* Darker green for hover */
+    transform: rotate(45deg); /* Slight rotation */
+    background-color: rgba(46, 204, 113, 0.1);  /* Light green background */
+    padding: 5px;
+    border-radius: 50%;
+}
+
+

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="landing.css">
 </head>
 <body>
@@ -44,16 +46,30 @@
                     <option value="high">High</option>
                 </select>
                 <button id="addTaskButton">Add Task</button>
+
+                
             </div>
             <ul id="taskList" class="task-list">
 
                 <li class="task-item">
+                    <div class ="task-item-content">
                     <span class="task-label">Task Title</span>
                     <div class="task-details">Due: 2024-12-31 | Priority: high</div>
-                    <button class="edit">Edit</button>
-                    <button class="done">Done</button>
-                    <button class="delete">Delete</button>
+                    <div class="timer-display">00:15:30</div>
+    
+
+                    <button class="edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="done">
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="delete">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </li>
+
+                    
             </ul>
             
         </main>

@@ -164,10 +164,12 @@ const renderTasks = (filteredTasks = tasks) => {
             }
         });
 
-        const editButton = document.createElement("button");
-        editButton.textContent = "Edit";
-        editButton.classList.add("edit");
-        editButton.addEventListener("click", () => {
+        const editIcon = document.createElement("button");
+       // editButton.textContent = "Edit";
+        //editButton.classList.add("edit");
+        editIcon.classList.add("fas", "fa-pencil-alt", "edit-icon");
+
+        editIcon.addEventListener("click", () => {
             if (task.isRunning) {
                 stopTimer(task.id);
                 timeTrackButton.textContent = "Start Timer";
@@ -182,10 +184,12 @@ const renderTasks = (filteredTasks = tasks) => {
             renderTasks();
         });
 
-        const doneButton = document.createElement("button");
-        doneButton.textContent = task.done ? "Undo" : "Done";
-        doneButton.classList.add("done");
-        doneButton.addEventListener("click", () => {
+        const doneIcon = document.createElement("i");
+        //doneButton.textContent = task.done ? "Undo" : "Done";
+        //doneButton.classList.add("done");
+        doneIcon.classList.add("fas", task.done ? "fa-undo" : "fa-check", "done-icon");
+
+        doneIcon.addEventListener("click", () => {
             if (task.isRunning) {
                 stopTimer(task.id);
             }
@@ -203,10 +207,12 @@ const renderTasks = (filteredTasks = tasks) => {
             renderTasks();
         });
 
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.classList.add("delete");
-        deleteButton.addEventListener("click", () => {
+        const deleteIcon = document.createElement("i");
+        // deleteButton.textContent = "Delete";
+        // deleteButton.classList.add("delete");
+        deleteIcon.classList.add("fas", "fa-trash", "delete-icon");
+    
+        deleteIcon.addEventListener("click", () => {
             if (task.isRunning) {
                 stopTimer(task.id);
             }
@@ -221,9 +227,9 @@ const renderTasks = (filteredTasks = tasks) => {
         taskItem.appendChild(taskDetails);
         taskItem.appendChild(timerDisplay);
         taskItem.appendChild(timeTrackButton);
-        taskItem.appendChild(editButton);
-        taskItem.appendChild(doneButton);
-        taskItem.appendChild(deleteButton);
+        taskItem.appendChild(editIcon);
+        taskItem.appendChild(doneIcon);
+        taskItem.appendChild(deleteIcon);
         taskList.appendChild(taskItem);
 
         // Restart timer if it was running
