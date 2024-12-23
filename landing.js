@@ -7,7 +7,6 @@ const taskInput = document.getElementById("taskInput");
 const taskDescriptionInput = document.getElementById("taskDescriptionInput");
 const taskDueDate = document.getElementById("taskDueDate");
 const taskPriority = document.getElementById("taskPriority");
-const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
 const searchBar = document.getElementById("searchBar");
 
@@ -242,39 +241,6 @@ const renderTasks = (filteredTasks = tasks) => {
 // Initial rendering of tasks
 renderTasks();
 
-// Add a new task
-addTaskButton.addEventListener("click", () => {
-    const taskText = taskInput.value.trim();
-    const taskDescription = taskDescriptionInput.value.trim();
-    const taskDueDateValue = taskDueDate.value;
-    const taskPriorityValue = taskPriority.value;
-
-    if (!taskText) {
-        alert("Task name cannot be empty!");
-        return;
-    }
-
-    const newTask = {
-        id: Date.now().toString(),
-        taskTitle: taskText,
-        description: taskDescription,
-        dueDate: taskDueDateValue,
-        priority: taskPriorityValue,
-        done: false,
-        elapsedSeconds: 0,
-        isRunning: false
-    };
-
-    tasks.push(newTask);
-    saveTasks();
-    renderTasks();
-
-    // Clear inputs
-    taskInput.value = "";
-    taskDescriptionInput.value = "";
-    taskDueDate.value = "";
-    taskPriority.value = "low";
-});
 
 signOutButton.addEventListener("click", () => {
     const isConfirmed = confirm("Are you sure you want to sign out?");
@@ -312,3 +278,66 @@ window.addEventListener('beforeunload', () => {
 const navigateTo = (url) => {
     window.location.href = url;
 };
+
+const addTaskButton = document.getElementById('addTaskButton');
+const taskPopup = document.getElementById('taskPopup');
+const closePopup = document.getElementById('closePopup');
+const taskForm = document.getElementById('taskForm');
+
+// Show the popup when "Add Task" is clicked
+addTaskButton.addEventListener('click', () => {
+    taskPopup.style.display = 'flex';
+});
+
+// Hide the popup when the close button is clicked
+closePopup.addEventListener('click', () => {
+    taskPopup.style.display = 'none';
+});
+
+// Optional: Hide the popup when clicking outside the content
+window.addEventListener('click', (event) => {
+    if (event.target === taskPopup) {
+        taskPopup.style.display = 'none';
+    }
+});
+
+// Handle form submission
+taskForm.addEventListener('submit', (event) => {
+    event.preventDefault(); // Prevent form from reloading the page
+
+    const taskTitle = document.getElementById('taskInput').value;
+    const taskDescription = document.getElementById('taskDescriptionInput').value;
+    const taskDueDate = document.getElementById('taskDueDate').value;
+    const taskPriority = document.getElementById('taskPriority').value;
+
+    // Generate a unique ID for the task
+    const taskId = `task-${Date.now()}`;
+
+    // Create a new task object
+    const newTask = {
+        id: taskId,
+        taskTitle,
+        description: taskDescription,
+        dueDate: taskDueDate || null, // Set to null if no due date
+        priority: taskPriority || 'low', // Default to 'low' if not provided
+        done: false,
+        isRunning: false,
+        elapsedSeconds: 0,
+    };
+
+    // Add the new task to the tasks array
+    tasks.push(newTask);
+
+    // Save the updated tasks to localStorage
+    saveTasks();
+
+    // Re-render the task list
+    renderTasks();
+
+    // Close the popup after task submission
+    taskPopup.style.display = 'none';
+
+    // Optionally, clear form fields
+    taskForm.reset();
+});
+

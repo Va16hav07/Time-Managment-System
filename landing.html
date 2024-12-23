@@ -35,20 +35,29 @@
                   placeholder="Search for a task..." 
                   oninput="filterTasks()">
             </div><br>
-            <h2>Your Tasks</h2>
-            <div class="task-input">
-                <input type="text" id="taskInput" placeholder="Add Task title">
-                <input type="text" id="taskDescriptionInput" placeholder="Task Description">
-                <input type="date" id="taskDueDate" placeholder="Due Date">
-                <select id="taskPriority">
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                </select>
+            <div id="mainContent">
+                <h2>Your Tasks</h2>
                 <button id="addTaskButton">Add Task</button>
-
-                
+                <!-- Other main content elements -->
             </div>
+            <div id="taskPopup" class="popup-container">
+                <div class="popup-content">
+                    <span id="closePopup" class="close-button">&times;</span>
+                    <h2>Add New Task</h2>
+                    <form id="taskForm">
+                        <input type="text" id="taskInput" placeholder="Task Title" required>
+                        <input type="text" id="taskDescriptionInput" placeholder="Task Description" required>
+                        <input type="date" id="taskDueDate" required>
+                        <select id="taskPriority">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                        <button type="submit">Submit Task</button>
+                    </form>
+                </div>
+            </div>
+            
             <ul id="taskList" class="task-list">
 
                 <li class="task-item">
