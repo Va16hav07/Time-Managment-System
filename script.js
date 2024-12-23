@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     window.location.href = "landing.html";
                 }, 1000);
             } else {
-                loginMessage.textContent = "Invalid credentials. Please try again.";
+                loginMessage.textContent = "User not found. Please sign up first.";
                 loginMessage.style.color = "red";
             }
         });
