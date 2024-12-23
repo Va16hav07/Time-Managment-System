@@ -10,6 +10,9 @@ const taskPriority = document.getElementById("taskPriority");
 const taskList = document.getElementById("taskList");
 const searchBar = document.getElementById("searchBar");
 
+// Restrict past dates in the task due date input
+taskDueDate.setAttribute("min", new Date().toISOString().split("T")[0]);
+
 // Retrieve logged-in user
 const loggedinUser = JSON.parse(localStorage.getItem("loggedinUser"));
 
@@ -153,9 +156,8 @@ const renderTasks = (filteredTasks = tasks) => {
         priorityLabel.style.display = "inline-block";
         priorityLabel.style.marginLeft = "10px";
 
-        taskDetails.innerHTML = `
-            <span>Due: ${task.dueDate || "No due date"}</span> | 
-        `;
+        taskDetails.innerHTML = 
+            `<span>Due: ${task.dueDate || "No due date"}</span> |`;
         taskDetails.appendChild(priorityLabel);
         taskDetails.style.marginTop = "5px";
 
