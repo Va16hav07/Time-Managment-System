@@ -275,6 +275,11 @@ window.addEventListener('beforeunload', () => {
         }
     });
 });
+
+profileIcon.addEventListener('click', () => {
+    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+});
+
 const navigateTo = (url) => {
     window.location.href = url;
 };
@@ -340,4 +345,3 @@ taskForm.addEventListener('submit', (event) => {
     // Optionally, clear form fields
     taskForm.reset();
 });
-

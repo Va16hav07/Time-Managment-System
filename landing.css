@@ -398,10 +398,7 @@ button.end-task:active {
     border-color: var(--accent-color);
     outline: none;
     box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
-}
-
-/* Profile Icon and Dropdown Menu */
-.profile-icon-container {
+}.profile-icon-container {
     position: relative;
     display: inline-block;
 }
@@ -444,6 +441,11 @@ button.end-task:active {
     background: none;
     cursor: pointer;
     transition: background 0.3s;
+    display: block;
+    margin-bottom: 5px;
+    width: 100%;  /* Make the width match the container */
+    height: 40px; /* Ensure each item has the same height */
+    text-align: center; /* Center align text */
 }
 
 .dropdown-item:hover {
@@ -451,9 +453,6 @@ button.end-task:active {
     color: #fff;
 }
 
-
-
- 
 
 .delete-icon:hover {
     color: #c0392b;  
@@ -464,7 +463,6 @@ button.end-task:active {
 }
 
 .delete-icon {
-    
         width: 8px; /* Set smaller width */
         height: 8px; /* Set smaller height */
         font-size: 10px; /* Adjust font size to fit smaller container */
@@ -648,20 +646,4 @@ button.end-task:active {
 
 body.blurred {
     filter: blur(5px);
-}
-
-.profile-container button {
-    padding: 10px 20px;
-    background-color: #6c757d; 
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 1rem;
-    width: 100%;
-}
-
-.profile-container button:hover {
-    background-color: #5a6268; 
 }
