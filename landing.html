@@ -20,7 +20,15 @@
                     <button class="dropdown-item" onclick="navigateTo('abt.html')">About Us</button>
                     <button class="dropdown-item" id="signOutButton">Sign Out</button>
                 </div>
-            </div>            
+            </div>
+            <!-- Pop-up Modal -->
+            <div id="popup" class="popup-overlay hidden">
+                <div class="popup-content">
+                    <h2>Profile</h2>
+                    <button onclick="navigateTo('profile.html')">Go to Profile</button>
+                    <button onclick="closePopup()">Close</button>
+                </div>
+            </div>
         </div>
     </div>
     

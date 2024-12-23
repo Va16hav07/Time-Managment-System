@@ -97,9 +97,9 @@ const stopTimer = (taskId) => {
 
 const renderTasks = (filteredTasks = tasks) => {
     taskList.innerHTML = "";
-    
+
     const userTasks = filteredTasks;
-    
+
     userTasks.sort((a, b) => {
         const priorityOrder = { high: 1, medium: 2, low: 3 };
         const priorityComparison = priorityOrder[a.priority] - priorityOrder[b.priority];
@@ -133,10 +133,30 @@ const renderTasks = (filteredTasks = tasks) => {
         timerDisplay.style.fontFamily = "monospace";
 
         const taskDetails = document.createElement("div");
+
+        // Priority circle styles
+        const priorityColors = {
+            low: "green",
+            medium: "yellow",
+            high: "red"
+        };
+
+        // Create priority label with circle and color coding
+        const priorityLabel = document.createElement("span");
+        priorityLabel.textContent = task.priority === 'low' ? "P1" :
+                                    task.priority === 'medium' ? "P2" : "P3";
+        priorityLabel.style.color = "#fff";  // Text color
+        priorityLabel.style.backgroundColor = priorityColors[task.priority] || "black";  // Circle color
+        priorityLabel.style.padding = "5px 10px";  // Circle size
+        priorityLabel.style.borderRadius = "50%";  // Make it circular
+        priorityLabel.style.fontWeight = "bold";
+        priorityLabel.style.display = "inline-block";
+        priorityLabel.style.marginLeft = "10px";
+
         taskDetails.innerHTML = `
             <span>Due: ${task.dueDate || "No due date"}</span> | 
-            <span>Priority: ${task.priority}</span>
         `;
+        taskDetails.appendChild(priorityLabel);
         taskDetails.style.marginTop = "5px";
 
         const timeTrackButton = document.createElement("button");
@@ -164,8 +184,6 @@ const renderTasks = (filteredTasks = tasks) => {
         });
 
         const editIcon = document.createElement("button");
-       // editButton.textContent = "Edit";
-        //editButton.classList.add("edit");
         editIcon.classList.add("fas", "fa-pencil-alt", "edit-icon");
 
         editIcon.addEventListener("click", () => {
@@ -184,8 +202,6 @@ const renderTasks = (filteredTasks = tasks) => {
         });
 
         const doneIcon = document.createElement("i");
-        //doneButton.textContent = task.done ? "Undo" : "Done";
-        //doneButton.classList.add("done");
         doneIcon.classList.add("fas", task.done ? "fa-undo" : "fa-check", "done-icon");
 
         doneIcon.addEventListener("click", () => {
@@ -207,8 +223,6 @@ const renderTasks = (filteredTasks = tasks) => {
         });
 
         const deleteIcon = document.createElement("i");
-        // deleteButton.textContent = "Delete";
-        // deleteButton.classList.add("delete");
         deleteIcon.classList.add("fas", "fa-trash", "delete-icon");
     
         deleteIcon.addEventListener("click", () => {
