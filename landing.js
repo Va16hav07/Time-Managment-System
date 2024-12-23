@@ -73,13 +73,15 @@ const startTimer = (taskId) => {
 
     task.isRunning = true;
     startTimes[taskId] = Date.now();
-    
+    localStorage.setItem(userTaskKey, JSON.stringify(tasks)); // Save tasks after timer start
+
     timers[taskId] = setInterval(() => {
         updateTimerDisplay(taskId);
     }, 1000);
 
     updateTimerDisplay(taskId);
 };
+
 
 const stopTimer = (taskId) => {
     const task = tasks.find(t => t.id === taskId);
@@ -94,8 +96,8 @@ const stopTimer = (taskId) => {
     task.isRunning = false;
     delete startTimes[taskId];
 
+    localStorage.setItem(userTaskKey, JSON.stringify(tasks)); // Save tasks after timer stop
     updateTimerDisplay(taskId);
-    saveTasks();
 };
 
 const renderTasks = (filteredTasks = tasks) => {
@@ -361,3 +363,4 @@ taskForm.addEventListener('submit', (event) => {
     // Optionally, clear form fields
     taskForm.reset();
 });
+
