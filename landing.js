@@ -152,7 +152,7 @@ const renderTasks = (filteredTasks = tasks) => {
         // Priority circle styles
         const priorityColors = {
             low: "green",
-            medium: "yellow",
+            medium: "blue",
             high: "red"
         };
 
