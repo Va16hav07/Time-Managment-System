@@ -46,6 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Show login page by default
+    togglePages(false);
+
     // Helper function to validate email format
     function validateEmail(email) {
         return email.endsWith('@gmail.com');
@@ -103,13 +106,18 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 users.push({ name, email, password });
                 localStorage.setItem("users", JSON.stringify(users));
-                message.textContent = "Account created successfully! You can now log in.";
+                message.textContent = "Account created successfully! Redirecting to login...";
                 message.style.color = "green";
 
                 // Clear input fields
                 nameInput.value = "";
                 emailInput.value = "";
                 passwordInput.value = "";
+
+                // Redirect to login page after a short delay
+                setTimeout(() => {
+                    togglePages(false);
+                }, 1000);
             }
         });
     }
@@ -122,16 +130,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Handle login
-    if (loginButton) {
-        loginButton.addEventListener("click", () => {
-            const email = loginEmailInput.value.trim();
-            const password = loginPasswordInput.value.trim();
+// Handle login
+if (loginButton) {
+    loginButton.addEventListener("click", () => {
+        const email = loginEmailInput.value.trim();
+        const password = loginPasswordInput.value.trim();
 
-            const users = JSON.parse(localStorage.getItem("users"));
-            const user = users.find(user => user.email === email && user.password === password);
+        const users = JSON.parse(localStorage.getItem("users"));
+        const user = users.find(user => user.email === email);
 
-            if (user) {
+        if (user) {
+            if (user.password === password) {
                 // Store logged-in user, including their name and email
                 localStorage.setItem(
                     "loggedinUser",
@@ -145,11 +154,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     window.location.href = "landing.html";
                 }, 1000);
             } else {
-                loginMessage.textContent = "User not found. Please sign up first.";
+                loginMessage.textContent = "Incorrect password. Please try again.";
                 loginMessage.style.color = "red";
             }
-        });
-    }
+            
+        } else {
+            loginMessage.textContent = "User not found. Please sign up first.";
+            loginMessage.style.color = "red";
+        }
+    });
+}
+
 
     // Redirect to register page
     if (redirectToRegisterButton) {

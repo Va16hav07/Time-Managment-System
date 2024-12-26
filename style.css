@@ -101,3 +101,32 @@ body {
 #togglePasswordButton:hover, #loginTogglePasswordButton:hover {
     background-color: #1b1b1b;
 }
+
+/* Styling for the Show Password Checkbox (aligned in one line) */
+.password-container {
+    display: flex;
+    flex-direction: column;  /* Align checkbox and label vertically */
+    margin-top: 10px;
+    font-size: 14px;
+    color: #000000;
+}
+
+.password-container input[type="checkbox"] {
+    margin-right:0px; /* Space between checkbox and label */
+    width: 24px;
+    height: 24px;
+}
+
+.password-container label {
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 5px;  /* Add space between checkbox and label */
+}
+
+/* Optional: Styling for the login page checkbox */
+#showPassword, #showLoginPassword {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin-right: 8px;
+}

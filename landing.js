@@ -103,6 +103,16 @@ const stopTimer = (taskId) => {
 const renderTasks = (filteredTasks = tasks) => {
     taskList.innerHTML = "";
 
+    if (filteredTasks.length === 0) {
+        const noTasksMessage = document.createElement("div");
+        noTasksMessage.textContent = "No tasks found.";
+        noTasksMessage.style.textAlign = "center";
+        noTasksMessage.style.color = "#555";
+        noTasksMessage.style.fontStyle = "italic";
+        taskList.appendChild(noTasksMessage);
+        return;
+    }
+
     const userTasks = filteredTasks;
 
     userTasks.sort((a, b) => {
@@ -282,7 +292,7 @@ searchBar.addEventListener("input", () => {
         task.taskTitle.toLowerCase().includes(searchQuery) ||
         (task.description && task.description.toLowerCase().includes(searchQuery))
     );
-    renderTasks(filteredTasks);
+    renderTasks(filteredTasks); // Pass the filtered tasks to render
 });
 
 // Clean up all timers when the window is closed or refreshed
